@@ -1,0 +1,129 @@
+<mat-card class="payment-card">
+  <mat-card-title>Payment method</mat-card-title>
+  <mat-card-content>
+    <div *ngIf="paymentType === 'product' && product" class="product-summary">
+      <h2>Paying for: {{ product.productName }}</h2>
+      <p>Price: ₹{{ product.price ? product.price.toFixed(2) : '0.00' }}</p>
+      <mat-divider></mat-divider>
+    </div>
+
+    <div *ngIf="paymentType === 'cart' && cartItems.length > 0" class="cart-summary">
+      <h2>Paying for your cart:</h2>
+      <ul>
+        <li *ngFor="let item of cartItems">
+          {{ item.productName }} ({{ item.quantity }} x ₹{{ item.finalTotalAmount ? (item.finalTotalAmount / item.quantity).toFixed(2) : '0.00' }})
+        </li>
+      </ul>
+      <h3>Total Cart Amount: ₹{{ totalCartAmount.toFixed(2) }}</h3>
+      <mat-divider></mat-divider>
+    </div>
+
+    <div class="balance-section">
+      <h3>Your available balance</h3>
+      <div class="input-group">
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>Enter Code</mat-label>
+          <input matInput type="text" placeholder="Enter Code">
+        </mat-form-field>
+        <button mat-button class="apply-button">Apply</button>
+      </div>
+    </div>
+
+    <div class="payment-option-group">
+      <h3>UPI</h3>
+      <mat-radio-group aria-label="Select a UPI option" [(ngModel)]="selectedPaymentOption">
+        <mat-radio-button value="amazon-pay">
+          <label class="radio-label">
+            Amazon Pay
+            <img src="amazon_pay_logo.png" alt="Amazon Pay Logo" class="payment-logo">
+            <img src="upi_logo.png" alt="UPI Logo" class="payment-logo">
+            Bank of Maharashtra **8263
+          </label>
+        </mat-radio-button>
+        <mat-radio-button value="other-upi">
+          <label class="radio-label">
+            <img src="upi_logo.png" alt="UPI Logo" class="payment-logo">
+            Other UPI
+          </label>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="payment-option-group">
+      <h3>Another payment method</h3>
+      <mat-radio-group aria-label="Select another payment option" [(ngModel)]="selectedPaymentOption">
+        <mat-radio-button value="credit-debit-card">
+          <label class="radio-label">
+            Credit or debit card
+            <div class="card-logos">
+              <img src="visa_logo.png" alt="Visa Logo" class="payment-logo">
+              <img src="mastercard_logo.png" alt="Mastercard Logo" class="payment-logo">
+              <img src="american_express_logo.png" alt="American Express Logo" class="payment-logo">
+              <img src="diners_club_logo.png" alt="Diners Club Logo" class="payment-logo">
+              <img src="maestro_logo.png" alt="Maestro Logo" class="payment-logo">
+              <img src="rupay_logo.png" alt="RuPay Logo" class="payment-logo">
+            </div>
+          </label>
+        </mat-radio-button>
+
+        <mat-radio-button value="net-banking">
+          <label class="radio-label">
+            Net Banking
+            <mat-form-field appearance="outline" class="net-banking-select">
+              <mat-label>Choose an Option</mat-label>
+              <mat-select [(ngModel)]="selectedPaymentOption" name="netBankingOption"> <mat-option value="bank1">Bank 1</mat-option>
+                <mat-option value="bank2">Bank 2</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </label>
+        </mat-radio-button>
+
+        <mat-radio-button value="other-upi-apps">
+          <label class="radio-label">
+            Other UPI Apps
+            <span class="info-text">
+              <a href="#">Why?</a>
+            </span>
+          </label>
+        </mat-radio-button>
+
+        <mat-radio-button value="emi-unavailable">
+          <label class="radio-label">
+            EMI Unavailable
+            <span class="info-text">
+              <a href="#">Why?</a>
+            </span>
+          </label>
+        </mat-radio-button>
+
+        <mat-radio-button value="cash-on-delivery">
+          <label class="radio-label">
+            Cash on Delivery/Pay on Delivery
+            <span class="info-text">
+              Cash, UPI and Cards accepted. <a href="#">Know more.</a>
+            </span>
+          </label>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="payment-actions">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="payNow()"
+        [disabled]="(!product && paymentType === 'product') || (cartItems.length === 0 && paymentType === 'cart') || !selectedPaymentOption"
+      >
+        Proceed to Pay
+        <ng-container *ngIf="paymentType === 'product'">
+          (₹{{ product ? product.price.toFixed(2) : '0.00' }})
+        </ng-container>
+        <ng-container *ngIf="paymentType === 'cart'">
+          (₹{{ totalCartAmount.toFixed(2) }})
+        </ng-container>
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

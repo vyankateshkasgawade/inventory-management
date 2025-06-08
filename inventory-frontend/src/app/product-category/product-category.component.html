@@ -1,0 +1,48 @@
+
+<div class="container">
+  <h2>Product Categories</h2>
+
+  <!-- Add New Category -->
+  <mat-form-field appearance="fill" class="category-input">
+    <mat-label>Enter category name</mat-label>
+    <input matInput [(ngModel)]="newCategory.productCategoryName" />
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="createCategory()" [disabled]="!newCategory.productCategoryName">
+    Add
+  </button>
+
+  <mat-divider class="my-divider"></mat-divider>
+
+  <!-- Category List -->
+  <mat-card *ngFor="let category of categories" class="category-card">
+    <mat-card-content class="category-item">
+      <span *ngIf="editingCategoryId !== category.productCategoryId">
+        {{ category.productCategoryName }}
+      </span>
+
+      <mat-form-field *ngIf="editingCategoryId === category.productCategoryId" appearance="outline" class="edit-input">
+        <input matInput [(ngModel)]="updatedCategoryName" />
+      </mat-form-field>
+
+      <div class="action-buttons">
+        <ng-container *ngIf="editingCategoryId !== category.productCategoryId; else editingButtons">
+          <button mat-icon-button color="accent" (click)="startEdit(category)" matTooltip="Edit">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </ng-container>
+        <ng-template #editingButtons>
+          <button mat-icon-button color="primary" (click)="updateCategory()" matTooltip="Save">
+            <mat-icon>save</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="cancelEdit()" matTooltip="Cancel">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </ng-template>
+
+        <button mat-icon-button color="warn" (click)="deleteCategory(category.productCategoryId!)" matTooltip="Delete">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,62 @@
+/* src/app/app.component.css */
+
+.app-header {
+  background-color: var(--primary-background); /* Using variable from styles.css */
+  color: var(--text-color);
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px var(--box-shadow-color);
+}
+
+.app-nav a {
+  color: var(--text-color);
+  text-decoration: none;
+  margin-right: 20px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.app-nav a:hover {
+  color: var(--primary-color);
+}
+
+.theme-toggle-button {
+  background-color: var(--secondary-button-background);
+  color: var(--secondary-button-text);
+  border: 1px solid var(--border-color);
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between text and icon */
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.theme-toggle-button:hover {
+  filter: brightness(1.1); /* Slightly brighter on hover */
+}
+
+/* Style for Font Awesome icons if you use them */
+.theme-toggle-button i {
+  font-size: 1.1em;
+}
+
+.app-main-content {
+  min-height: calc(100vh - 100px); /* Adjust based on header/footer height */
+  padding: 20px;
+  background-color: var(--secondary-background);
+  color: var(--text-color);
+}
+
+.app-footer {
+  background-color: var(--card-background);
+  color: var(--text-color-light);
+  text-align: center;
+  padding: 15px;
+  border-top: 1px solid var(--border-color);
+  box-shadow: 0 -2px 4px var(--box-shadow-color);
+}

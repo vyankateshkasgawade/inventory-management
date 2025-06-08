@@ -1,0 +1,282 @@
+<div class="container">
+  <h2 class="page-title">User Management</h2>
+
+  <mat-card *ngIf="successMessage || errorMessage" class="mat-elevation-z4 mb-2 message-card">
+    <mat-card-content class="message-content">
+      <mat-icon [color]="successMessage ? 'primary' : 'warn'" class="message-icon">
+        {{ successMessage ? 'check_circle' : 'error' }}
+      </mat-icon>
+      <span class="message-text">{{ successMessage || errorMessage }}</span>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="mb-4 action-bar">
+    <button mat-raised-button color="primary" (click)="toggleRegistrationForm()" class="add-user-btn">
+      <mat-icon>add</mat-icon>
+      Add User
+    </button>
+  </div>
+
+  <mat-card *ngIf="showRegistrationForm" class="mb-4 registration-card">
+    <mat-card-header class="card-header">
+      <mat-card-title class="card-title">Register New User</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form *ngIf="!otpSent" (ngSubmit)="sendOtp()" #registrationForm="ngForm" class="registration-form">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Name</mat-label>
+          <input matInput name="name" [(ngModel)]="registrationData.name" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" name="email" [(ngModel)]="registrationData.email" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" name="password" [(ngModel)]="registrationData.password" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Phone</mat-label>
+          <input matInput name="phone" [(ngModel)]="registrationData.phone" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput [matDatepicker]="picker" name="dob" [(ngModel)]="registrationData.dob" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <h3>Address Details</h3>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Country/Region</mat-label>
+          <input matInput name="countryRegion" [(ngModel)]="registrationData.address!.countryRegion" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Pincode</mat-label>
+          <input matInput name="pincode" [(ngModel)]="registrationData.address!.pincode" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Flat/House No/Building/Company/Apartment</mat-label>
+          <input matInput name="flatHouseNo" [(ngModel)]="registrationData.address!.flatHouseNoBuildingCompanyApartment" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Area/Street/Sector/Village</mat-label>
+          <input matInput name="areaStreet" [(ngModel)]="registrationData.address!.areaStreetSectorVillage" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Landmark (Optional)</mat-label>
+          <input matInput name="landmark" [(ngModel)]="registrationData.address!.landmark" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Town/City</mat-label>
+          <input matInput name="townCity" [(ngModel)]="registrationData.address!.townCity" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>State</mat-label>
+          <input matInput name="state" [(ngModel)]="registrationData.address!.state" />
+        </mat-form-field>
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="registrationForm.invalid || isLoading" class="submit-btn">
+            <mat-progress-spinner *ngIf="isLoading" mode="indeterminate" diameter="20" color="accent" class="spinner"></mat-progress-spinner>
+            Send OTP
+          </button>
+          <button mat-button type="button" (click)="toggleRegistrationForm()" class="cancel-btn">Cancel</button>
+        </div>
+      </form>
+
+      <div *ngIf="otpSent && !otpVerified" class="otp-section">
+        <p class="otp-message">OTP sent to <strong>{{ registrationData.email }}</strong></p>
+        <form (ngSubmit)="verifyOtp()" class="otp-form">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Enter OTP</mat-label>
+            <input matInput name="otp" [(ngModel)]="registrationData.otp" required />
+          </mat-form-field>
+          <div class="form-actions">
+            <button mat-raised-button color="primary" type="submit" [disabled]="isLoading" class="verify-btn">
+              <mat-progress-spinner *ngIf="isLoading" mode="indeterminate" diameter="20" color="accent" class="spinner"></mat-progress-spinner>
+              Verify OTP
+            </button>
+            <button mat-button type="button" (click)="toggleRegistrationForm()" class="cancel-btn">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <div *ngIf="otpVerified" class="text-center mt-4">
+        <div class="form-actions">
+          <button mat-raised-button color="primary" (click)="registerUser()" [disabled]="isLoading" class="complete-btn">
+            <mat-progress-spinner *ngIf="isLoading" mode="indeterminate" diameter="20" color="accent" class="spinner"></mat-progress-spinner>
+            Complete Registration
+          </button>
+          <button mat-button type="button" (click)="toggleRegistrationForm()" class="cancel-btn">Cancel</button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="users-table-card">
+    <mat-card-header class="card-header">
+      <mat-card-title class="card-title">User List</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="table-container">
+        <table mat-table [dataSource]="users" class="mat-elevation-z8 full-width users-table">
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef class="table-header">Name</th>
+            <td mat-cell *matCellDef="let user" class="table-cell">{{ user.name }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef class="table-header">Email</th>
+            <td mat-cell *matCellDef="let user" class="table-cell">{{ user.email }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef class="table-header">Role</th>
+            <td mat-cell *matCellDef="let user" class="table-cell">{{ user.role }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef class="table-header">Status</th>
+            <td mat-cell *matCellDef="let user" class="table-cell">
+              <span [class.active]="user.isActive" [class.inactive]="!user.isActive">
+                {{ user.isActive ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef class="table-header">Address</th>
+            <td mat-cell *matCellDef="let user" class="table-cell">
+              <ng-container *ngIf="user.address">
+                {{ user.address.flatHouseNoBuildingCompanyApartment }}
+                <span *ngIf="user.address.areaStreetSectorVillage">, {{ user.address.areaStreetSectorVillage }}</span>
+                <span *ngIf="user.address.townCity">, {{ user.address.townCity }}</span>
+                <span *ngIf="user.address.state">, {{ user.address.state }}</span>
+                <span *ngIf="user.address.pincode"> - {{ user.address.pincode }}</span>
+              </ng-container>
+              <ng-container *ngIf="!user.address">
+                N/A
+              </ng-container>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="table-header">Actions</th>
+            <td mat-cell *matCellDef="let user" class="table-cell actions-cell">
+              <button mat-icon-button color="accent" (click)="selectUser(user)" matTooltip="Edit User" class="action-btn">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteUser(user.userId!)" matTooltip="Delete User" class="action-btn">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="['name','email','role','status','address','actions']" class="table-header-row"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['name','email','role','status','address','actions'];" class="table-row"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="selectedUser" class="mt-4 edit-user-card">
+    <mat-card-header class="card-header">
+      <mat-card-title class="card-title">Edit User</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form (ngSubmit)="updateUser()" #editForm="ngForm" class="edit-form">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Name</mat-label>
+          <input matInput name="name" [(ngModel)]="selectedUser.name" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput name="email" [(ngModel)]="selectedUser.email" type="email" readonly />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Phone</mat-label>
+          <input matInput name="phone" [(ngModel)]="selectedUser.phone" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput [matDatepicker]="editPicker" name="dob" [(ngModel)]="selectedUser.dob" />
+          <mat-datepicker-toggle matSuffix [for]="editPicker"></mat-datepicker-toggle>
+          <mat-datepicker #editPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Role</mat-label>
+          <mat-select name="role" [(ngModel)]="selectedUser.role" required>
+            <mat-option value="USER">USER</mat-option>
+            <mat-option value="ADMIN">ADMIN</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Status</mat-label>
+          <mat-select name="isActive" [(ngModel)]="selectedUser.isActive" required>
+            <mat-option [value]="true">Active</mat-option>
+            <mat-option [value]="false">Inactive</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <h3>Address Details</h3>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Country/Region</mat-label>
+          <input matInput name="editCountryRegion" [(ngModel)]="selectedUser.address!.countryRegion" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Pincode</mat-label>
+          <input matInput name="editPincode" [(ngModel)]="selectedUser.address!.pincode" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Flat/House No/Building/Company/Apartment</mat-label>
+          <input matInput name="editFlatHouseNo" [(ngModel)]="selectedUser.address!.flatHouseNoBuildingCompanyApartment" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Area/Street/Sector/Village</mat-label>
+          <input matInput name="editAreaStreet" [(ngModel)]="selectedUser.address!.areaStreetSectorVillage" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Landmark (Optional)</mat-label>
+          <input matInput name="editLandmark" [(ngModel)]="selectedUser.address!.landmark" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Town/City</mat-label>
+          <input matInput name="editTownCity" [(ngModel)]="selectedUser.address!.townCity" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>State</mat-label>
+          <input matInput name="editState" [(ngModel)]="selectedUser.address!.state" />
+        </mat-form-field>
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="isLoading || editForm.invalid" class="update-btn">
+            <mat-progress-spinner *ngIf="isLoading" mode="indeterminate" diameter="20" color="accent" class="spinner"></mat-progress-spinner>
+            Update
+          </button>
+          <button mat-button type="button" (click)="selectedUser = undefined" class="cancel-btn">Cancel</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

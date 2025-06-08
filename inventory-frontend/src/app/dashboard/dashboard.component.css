@@ -1,0 +1,584 @@
+/* Global CSS Variables for Theming */
+
+/* Light Theme Variables (Default) */
+:root {
+  /* Primary Colors */
+  --primary-color: #3f51b5; /* Example: Deep Blue */
+  --accent-color: #ff4081;  /* Example: Pink */
+  --warn-color: #f44336;    /* Example: Red */
+
+  /* Backgrounds */
+  --primary-background: #f0f2f5; /* Light grey for content area */
+  --secondary-background: #ffffff; /* White for cards, panel headers */
+  --card-background: #ffffff;      /* White for general cards */
+  --overlay-background: rgba(0, 0, 0, 0.5); /* Semi-transparent black for overlays */
+
+  /* Sidenav Specific */
+  --sidenav-background: #ffffff;         /* White sidebar background */
+  --sidenav-header-background: #e0e0e0;  /* Light grey for sidenav header */
+  --sidenav-text-color: #4a4a4a;         /* Dark grey for navigation text */
+  --sidenav-icon-color: #4a4a4a;         /* Dark grey for navigation icons */
+  --sidenav-hover-background: #e0e0e0;   /* Light grey on hover */
+  --sidenav-active-background: #c5d2ef;  /* Light blue for active link background */
+  --sidenav-active-text-color: #3f51b5;  /* Primary blue for active link text */
+  --sidenav-active-icon-color: #3f51b5;  /* Primary blue for active link icon */
+
+  /* Text Colors */
+  --heading-color: #333333;       /* Dark grey for headings */
+  --text-color: #555555;          /* Medium grey for general text */
+  --text-color-light: #777777;    /* Lighter grey for subtle text */
+  --primary-button-text: #ffffff; /* White text for primary buttons */
+
+  /* Borders & Shadows */
+  --border-color: #e0e0e0;               /* Light grey for borders */
+  --box-shadow-color: rgba(0, 0, 0, 0.1); /* Subtle shadow for cards */
+
+  /* Status Colors */
+  --success-text: #4caf50;        /* Green for success messages/status */
+  --error-text: #f44336;          /* Red for error messages/status */
+  --info-text: #ffffff;           /* White for info snackbars */
+  --success-background: #4caf50;  /* Green for success snackbar background */
+  --error-background: #f44336;    /* Red for error snackbar background */
+  --info-background: #2196f3;     /* Blue for info snackbar background */
+}
+
+/* Dark Theme Variables */
+.dark-theme { /* Apply this class to your <body> tag or a main theme wrapper */
+  /* Primary Colors - Adjust as needed for dark mode palette */
+  --primary-color: #7986cb; /* Lighter blue for dark mode */
+  --accent-color: #f06292;  /* Lighter pink for dark mode */
+  --warn-color: #e57373;    /* Lighter red for dark mode */
+
+  /* Backgrounds */
+  --primary-background: #121212; /* Darkest background */
+  --secondary-background: #1e1e1e; /* Slightly lighter dark for panels/card inner */
+  --card-background: #2d2d2d;      /* Medium dark for general cards */
+  --overlay-background: rgba(0, 0, 0, 0.7); /* More opaque black for overlays */
+
+  /* Sidenav Specific */
+  --sidenav-background: #1e1e1e;         /* Dark sidebar background */
+  --sidenav-header-background: #333333;  /* Darker grey for sidenav header */
+  --sidenav-text-color: #ffffff;         /* WHITE for navigation text in dark mode */
+  --sidenav-icon-color: #ffffff;         /* WHITE for navigation icons in dark mode */
+  --sidenav-hover-background: #3a3a3a;   /* Darker grey on hover */
+  --sidenav-active-background: #4a4a4a;  /* Slightly lighter dark for active link background */
+  --sidenav-active-text-color: #ffffff;  /* WHITE for active link text */
+  --sidenav-active-icon-color: #ffffff;  /* WHITE for active link icon */
+
+  /* Text Colors */
+  --heading-color: #e0e0e0;       /* Light grey for headings */
+  --text-color: #b0b0b0;          /* Lighter grey for general text */
+  --text-color-light: #909090;    /* Even lighter grey for subtle text */
+  --primary-button-text: #ffffff; /* White text remains for primary buttons */
+
+  /* Borders & Shadows */
+  --border-color: #444444;                 /* Darker grey for borders */
+  --box-shadow-color: rgba(0, 0, 0, 0.5); /* More prominent shadow for cards */
+
+  /* Status Colors - Adjusted for better visibility on dark backgrounds */
+  --success-text: #66bb6a;
+  --error-text: #ef5350;
+  --info-text: #e0e0e0;
+  --success-background: #66bb6a;
+  --error-background: #ef5350;
+  --info-background: #42a5f5;
+}
+/* dashboard.component.css */
+
+/* Existing styles */
+.sidenav-container {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 250px;
+  background-color: var(--sidenav-background); /* Uses variable */
+  box-shadow: 2px 0 5px var(--box-shadow-color); /* Uses variable */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+/* Style for the IMS Dashboard header within the sidenav */
+.sidenav-header {
+  padding: 16px; /* Adjust as needed for spacing */
+  font-size: 1.5em; /* Adjust font size as needed */
+  font-weight: bold;
+  color: var(--sidenav-header-color); /* Variable for the header text color */
+  background-color: var(--sidenav-header-background); /* Variable for header background */
+  border-bottom: 1px solid var(--border-color); /* Optional: add a border for separation */
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+
+.sidenav .mat-nav-list {
+  padding-top: 0;
+}
+
+.sidenav .mat-list-item {
+  color: var(--sidenav-text-color); /* Uses variable (this will now turn white in dark mode) */
+  margin-bottom: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+.sidenav .mat-list-item .mat-icon {
+  color: var(--sidenav-icon-color); /* Uses variable (this will now turn white in dark mode) */
+  margin-right: 10px;
+  transition: color 0.3s ease; /* Smooth transition */
+}
+
+.sidenav .mat-list-item:hover {
+  background-color: var(--sidenav-hover-background); /* Uses variable */
+  border-radius: 4px;
+}
+
+.sidenav .mat-list-item.active-link {
+  background-color: var(--sidenav-active-background); /* Uses variable */
+  color: var(--sidenav-active-text-color); /* Uses variable (this will also turn white in dark mode) */
+  font-weight: bold;
+}
+
+.sidenav .mat-list-item.active-link .mat-icon {
+  color: var(--sidenav-active-icon-color); /* Uses variable (this will also turn white in dark mode) */
+}
+
+/* --- UPDATED TOP TOOLBAR STYLES --- */
+.top-toolbar {
+  display: flex;
+  justify-content: space-between; /* Distribute items evenly */
+  align-items: center;
+  padding: 0 16px; /* Add some padding on sides */
+  position: sticky; /* Make toolbar sticky at the top */
+  top: 0;
+  z-index: 1000; /* Ensure it's above content but below sidenav */
+  height: 64px; /* Standard toolbar height */
+  /* If this is not an Angular Material mat-toolbar, you might need to explicitly set its background and color */
+  background-color: var(--card-background); /* Using card-background for toolbar */
+  color: var(--heading-color); /* Using heading-color for toolbar text */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.toolbar-title {
+  flex-grow: 1; /* Allows the title to take available space */
+  text-align: left; /* Align left to give space for toggle button */
+  margin-left: 16px; /* Adjust spacing from toggle button */
+  margin-right: 16px; /* Adjust spacing before spacer */
+  font-size: 1.25em; /* Make title slightly larger */
+  white-space: nowrap; /* Prevent title from wrapping */
+  overflow: hidden; /* Hide overflowed text */
+  text-overflow: ellipsis; /* Add ellipsis for overflowed text */
+  color: var(--heading-color); /* Apply heading color */
+  transition: color 0.3s ease;
+}
+
+.toolbar-spacer {
+  flex-grow: 1; /* Pushes the subsequent elements (cart, logout) to the right */
+  min-width: 10px; /* Smallest push width */
+}
+
+.sidenav-toggle-button {
+  margin-right: 8px; /* Space between toggle and title/spacer */
+  display: none; /* Hide by default on larger screens */
+}
+/* --- END UPDATED TOP TOOLBAR STYLES --- */
+
+.content {
+  padding: 20px;
+  background-color: var(--primary-background); /* Content background */
+  transition: background-color 0.3s ease;
+}
+
+.dashboard-products-display {
+  padding: 0 20px;
+}
+
+.category-filter-container {
+  display: flex;
+  justify-content: flex-end; /* Aligns the dropdown to the right */
+  align-items: center; /* Vertically centers content if there were multiple items */
+  width: 100%; /* Ensures it takes the full available width */
+  margin-top: 15px; /* Adds space AFTER the "Products Overview" divider */
+  margin-bottom: 20px; /* Adds space BEFORE the accordion starts */
+  box-sizing: border-box; /* Ensures padding/borders are included in the element's total width and height */
+}
+
+.category-select-field {
+  width: 250px; /* Set a fixed width for the dropdown */
+  min-width: 180px; /* Ensure it doesn't get too small */
+  max-width: 100%; /* Prevent overflow on very small screens */
+}
+
+.mat-expansion-panel {
+  margin-bottom: 15px;
+  border-radius: 8px !important; /* Ensure consistent border-radius */
+  overflow: hidden; /* Hide overflow for rounded corners */
+  box-shadow: 0 2px 5px var(--box-shadow-color); /* Uses variable */
+  background-color: var(--card-background); /* Apply card background */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mat-expansion-panel-header {
+  padding: 10px 24px;
+  background-color: var(--secondary-background); /* Uses variable */
+  border-bottom: 1px solid var(--border-color); /* Uses variable */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.mat-expansion-panel-header:hover {
+  background-color: var(--secondary-background-hover); /* Uses variable */
+}
+
+.mat-panel-title h3 {
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: 500;
+  color: var(--heading-color); /* Uses variable */
+  transition: color 0.3s ease;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px; /* Add padding to the grid inside the expansion panel */
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--border-color); /* Uses variable */
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+  background-color: var(--card-background); /* Apply card background */
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px var(--box-shadow-color); /* Uses variable */
+}
+
+.product-card img {
+  height: 200px;
+  object-fit: contain; /* Changed to contain to avoid cropping product images */
+  width: 100%;
+  padding: 10px; /* Added padding for the image */
+  /* Crucial for fixing white backgrounds behind images: */
+  background-color: var(--secondary-background); /* Ensure image background matches card's inner content or similar */
+  transition: background-color 0.3s ease;
+}
+
+.product-card mat-card-header {
+  padding-bottom: 0;
+}
+
+.product-card mat-card-title {
+  font-size: 1.1em;
+  font-weight: bold;
+  white-space: nowrap; /* Prevent title from wrapping */
+  overflow: hidden; /* Hide overflowed text */
+  text-overflow: ellipsis; /* Add ellipsis for overflowed text */
+  color: var(--heading-color); /* Apply heading color */
+  transition: color 0.3s ease;
+}
+
+.product-card mat-card-subtitle {
+  color: var(--text-color-light); /* Uses variable */
+  transition: color 0.3s ease;
+}
+
+.product-card mat-card-content {
+  padding: 16px;
+  flex-grow: 1;
+  color: var(--text-color); /* Apply text color */
+  transition: color 0.3s ease;
+}
+
+.product-card mat-card-content p {
+  margin: 8px 0;
+}
+
+.product-card-actions {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 20px;
+}
+
+.active-status {
+  color: var(--success-text); /* Uses variable */
+  font-weight: bold;
+}
+
+.inactive-status {
+  color: var(--error-text); /* Uses variable */
+  font-weight: bold;
+}
+
+.no-products-message {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.2em;
+  color: var(--text-color-light); /* Uses variable */
+  transition: color 0.3s ease;
+}
+
+.product-options-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--overlay-background); /* Uses variable */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.product-options-card {
+  width: 90%;
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 5px 15px var(--box-shadow-color); /* Uses variable */
+  background-color: var(--card-background); /* Apply card background */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-options-card mat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.product-options-card .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1001;
+  color: var(--text-color); /* Ensure close button icon color is thematic */
+  transition: color 0.3s ease;
+}
+
+.product-options-card mat-card-content {
+  text-align: center;
+  padding-top: 10px;
+  color: var(--text-color); /* Apply text color */
+  transition: color 0.3s ease;
+}
+
+.product-options-card img {
+  max-height: 250px;
+  width: auto;
+  max-width: 100%;
+  margin-bottom: 15px;
+  border-radius: 4px;
+}
+
+.product-options-actions {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 20px;
+}
+
+/* Snackbar classes - ensure these are applied by your snackbar service */
+.success-snackbar {
+  background-color: var(--success-background);
+  color: var(--primary-button-text); /* Assuming text is always white/light for these */
+}
+
+.error-snackbar {
+  background-color: var(--error-background);
+  color: var(--primary-button-text);
+}
+
+.info-snackbar {
+  background-color: var(--info-background);
+  color: var(--info-text);
+}
+
+
+@media screen and (max-width: 991px) {
+
+  .sidenav {
+    width: 200px;
+  }
+
+  .toolbar-title {
+    font-size: 1.1em;
+  }
+
+  .content {
+    padding: 15px;
+  }
+
+  .dashboard-products-display {
+    padding: 0 15px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .mat-expansion-panel-header {
+    padding: 8px 16px;
+  }
+
+  .mat-panel-title h3 {
+    font-size: 1.1em;
+  }
+}
+
+/* For screens smaller than 768px (e.g., larger phones and small tablets) */
+@media screen and (max-width: 767px) {
+
+  .sidenav {
+    box-shadow: 0 8px 10px -5px var(--box-shadow-color), 0 16px 24px 2px var(--box-shadow-color), 0 6px 30px 5px var(--box-shadow-color); /* Uses variable */
+  }
+
+  .sidenav-toggle-button {
+    display: block !important;
+    order: -1;
+    margin-right: 8px;
+  }
+
+  .top-toolbar {
+    padding: 0 8px;
+    height: 56px;
+  }
+
+  .toolbar-title {
+    font-size: 1em;
+    margin-left: 8px;
+    margin-right: 8px;
+    text-align: center;
+    flex-grow: 1;
+  }
+
+  .toolbar-spacer {
+    display: none;
+  }
+
+  .content {
+    padding: 10px; /* Further reduce content padding */
+  }
+
+  .dashboard-products-display {
+    padding: 0 10px;
+  }
+
+  .category-filter-container {
+    justify-content: center; /* Center the filter on smaller screens */
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+
+  .category-select-field {
+    width: 100%; /* Filter takes full width */
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Adjust grid for smaller cards */
+    gap: 10px;
+    padding: 10px 0; /* Remove horizontal padding as dashboard-products-display has it */
+  }
+
+  .product-card {
+    border-radius: 6px; /* Slightly smaller border-radius for cards */
+  }
+
+  .product-card img {
+    height: 140px; /* Smaller image height */
+    padding: 5px;
+  }
+
+  .product-card mat-card-title {
+    font-size: 1em; /* Smaller title font for cards */
+  }
+
+  .product-card mat-card-content {
+    padding: 10px; /* Smaller content padding for cards */
+  }
+
+  .mat-expansion-panel {
+    margin-bottom: 10px; /* Reduce margin between panels */
+  }
+
+  .product-options-card {
+    width: 95%; /* Make product options card wider on small screens */
+    padding: 15px; /* Reduce padding inside the card */
+  }
+
+  .product-options-card mat-card-header {
+    flex-wrap: wrap; /* Allow header content to wrap */
+    justify-content: center; /* Center header items */
+    text-align: center;
+  }
+
+  .product-options-card img {
+    max-height: 180px; /* Adjust image size in overlay */
+  }
+
+  .product-options-actions {
+    flex-direction: column; /* Stack buttons vertically */
+    padding-top: 10px;
+  }
+
+  .product-options-actions button {
+    width: 100%;
+    margin-bottom: 8px; /* Add space between stacked buttons */
+  }
+  .product-options-actions button:last-child {
+    margin-bottom: 0; /* No margin after the last button */
+  }
+}
+
+/* For screens smaller than 480px (e.g., mobile phones) */
+@media screen and (max-width: 479px) {
+  .top-toolbar {
+    padding: 0 4px; /* Minimal padding for toolbar */
+  }
+
+  .toolbar-title {
+    font-size: 0.9em; /* Even smaller title font */
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .mat-badge-content {
+    font-size: 0.6em; /* Adjust badge font size */
+    padding: 2px 4px;
+    line-height: 1.2; /* Better vertical alignment for badge text */
+  }
+
+  .content {
+    padding: 5px; /* Minimal padding for very small screens */
+  }
+
+  .dashboard-products-display {
+    padding: 0 5px;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr; /* Single column layout for very small screens */
+    gap: 10px;
+    padding: 5px 0; 
+  }
+
+  .product-card img {
+    height: 100px; 
+  }
+
+  .product-options-card {
+    padding: 10px;
+  }
+
+  .product-options-card mat-card-title {
+    font-size: 1em; /* Adjust title font size in overlay */
+  }
+}

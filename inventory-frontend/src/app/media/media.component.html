@@ -1,0 +1,34 @@
+<h2>Media Management</h2>
+
+@if (message) {
+  <div class="message">{{ message }}</div>
+}
+
+<div class="upload-section">
+  <h3>Upload New Media</h3>
+  <input type="file" (change)="onFileSelected($event)" />
+  <button (click)="uploadFile()" [disabled]="!selectedFile">Upload</button>
+</div>
+
+<div class="media-list">
+  <h3>Uploaded Media Files</h3>
+  @if (mediaFiles.length === 0) {
+    <div>No media files uploaded yet.</div>
+  }
+  <ul>
+    @for (file of mediaFiles; track file.id) { <li>
+        @if (file.fileType.startsWith('image/')) {
+          <img [src]="file.fileUrl" alt="{{ file.originalFileName }}" width="100">
+        }
+        @if (file.fileType.startsWith('video/')) {
+          <video [src]="file.fileUrl" controls width="100"></video>
+        }
+        <p>
+          {{ file.originalFileName }} ({{ file.fileType }})
+          <a [href]="file.fileUrl" target="_blank">View Raw</a>
+          <button (click)="deleteFile(file.id)">Delete</button>
+        </p>
+      </li>
+    }
+  </ul>
+</div>

@@ -1,0 +1,45 @@
+<div class="list-container">
+  <h2>Purchase List</h2>
+
+  <table mat-table [dataSource]="purchases" [trackBy]="trackByPurchaseDetailsId" class="mat-elevation-z8 full-width">
+
+    <ng-container matColumnDef="purchaseDetailsId" *ngIf="isAdmin">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let p">{{ p.purchaseDetailsId }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="userId" *ngIf="isAdmin">
+      <th mat-header-cell *matHeaderCellDef>User ID</th>
+      <td mat-cell *matCellDef="let p">{{ p.userId }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="userName" *ngIf="isAdmin">
+      <th mat-header-cell *matHeaderCellDef>User Name</th>
+      <td mat-cell *matCellDef="let p">{{ p.userName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="productId">
+      <th mat-header-cell *matHeaderCellDef>Product ID</th>
+      <td mat-cell *matCellDef="let p">{{ p.productId }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="productName">
+      <th mat-header-cell *matHeaderCellDef>Product Name</th>
+      <td mat-cell *matCellDef="let p">{{ p.productName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="productCount">
+      <th mat-header-cell *matHeaderCellDef>Count</th>
+      <td mat-cell *matCellDef="let p">{{ p.productCount }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="purchaseDate">
+      <th mat-header-cell *matHeaderCellDef>Purchase Date</th>
+      <td mat-cell *matCellDef="let p">{{ p.purchaseDate | date:'short' }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+</div>

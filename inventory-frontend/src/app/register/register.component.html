@@ -1,0 +1,127 @@
+<div class="register-container">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <h2>Register</h2>
+
+    <div *ngIf="successMessage || errorMessage" class="message-card">
+      <span [class.success-message]="successMessage" [class.error-message]="errorMessage">
+        {{ successMessage || errorMessage }}
+      </span>
+    </div>
+
+    <ng-container *ngIf="!otpSent">
+      <div>
+        <label for="reg-name">Name</label>
+        <input id="reg-name" type="text" formControlName="name" />
+        <div *ngIf="registerForm.get('name')?.invalid && (registerForm.get('name')?.dirty || registerForm.get('name')?.touched)" class="error-message">
+          <span *ngIf="registerForm.get('name')?.errors?.['required']">Name is required.</span>
+        </div>
+      </div>
+
+      <div>
+        <label for="reg-email">Email</label>
+        <input id="reg-email" type="email" formControlName="email" />
+        <div *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)" class="error-message">
+          <span *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</span>
+          <span *ngIf="registerForm.get('email')?.errors?.['email']">Enter a valid email address.</span>
+        </div>
+      </div>
+
+      <div>
+        <label for="reg-password">Password</label>
+        <input id="reg-password" type="password" formControlName="password" />
+        <div *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)" class="error-message">
+          <span *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</span>
+          <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters.</span>
+        </div>
+      </div>
+
+      <div>
+        <label for="reg-confirm-password">Confirm Password</label>
+        <input id="reg-confirm-password" type="password" formControlName="confirmPassword" />
+        <div *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)" class="error-message">
+          <span *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirm password is required.</span>
+        </div>
+        <div *ngIf="registerForm.errors?.['mismatch'] && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)" class="error-message">
+          <span>Passwords do not match.</span>
+        </div>
+      </div>
+
+      <div>
+        <label for="reg-phone">Phone</label>
+        <input id="reg-phone" type="text" formControlName="phone" />
+        <div *ngIf="registerForm.get('phone')?.invalid && (registerForm.get('phone')?.dirty || registerForm.get('phone')?.touched)" class="error-message">
+          <span *ngIf="registerForm.get('phone')?.errors?.['required']">Phone is required.</span>
+        </div>
+      </div>
+
+      <div>
+        <label for="reg-dob">Date of Birth</label>
+        <input id="reg-dob" type="date" formControlName="dob" />
+      </div>
+
+      <h3>Address Details</h3>
+      <div formGroupName="address">
+        <div>
+          <label for="addr-country">Country/Region</label>
+          <input id="addr-country" type="text" formControlName="countryRegion" />
+        </div>
+        <div>
+          <label for="addr-pincode">Pincode</label>
+          <input id="addr-pincode" type="text" formControlName="pincode" />
+        </div>
+        <div>
+          <label for="addr-flat">Flat/House No/Building/Company/Apartment</label>
+          <input id="addr-flat" type="text" formControlName="flatHouseNoBuildingCompanyApartment" />
+        </div>
+        <div>
+          <label for="addr-area">Area/Street/Sector/Village</label>
+          <input id="addr-area" type="text" formControlName="areaStreetSectorVillage" />
+        </div>
+        <div>
+          <label for="addr-landmark">Landmark (Optional)</label>
+          <input id="addr-landmark" type="text" formControlName="landmark" />
+        </div>
+        <div>
+          <label for="addr-town">Town/City</label>
+          <input id="addr-town" type="text" formControlName="townCity" />
+        </div>
+        <div>
+          <label for="addr-state">State</label>
+          <input id="addr-state" type="text" formControlName="state" />
+        </div>
+      </div>
+
+      <button type="button" (click)="sendOtp()" [disabled]="registerForm.invalid || isLoading">
+        <span *ngIf="isLoading" class="spinner"></span>
+        Send OTP
+      </button>
+    </ng-container>
+
+    <ng-container *ngIf="otpSent && !otpVerified">
+      <p class="otp-message">OTP sent to <strong>{{ registerForm.get('email')?.value }}</strong></p>
+      <div>
+        <label for="reg-otp">Enter OTP</label>
+        <input id="reg-otp" type="text" formControlName="otp" required />
+        <div *ngIf="registerForm.get('otp')?.invalid && (registerForm.get('otp')?.dirty || registerForm.get('otp')?.touched)" class="error-message">
+          <span *ngIf="registerForm.get('otp')?.errors?.['required']">OTP is required.</span>
+        </div>
+      </div>
+      <button type="button" (click)="verifyOtp()" [disabled]="registerForm.get('otp')?.invalid || isLoading">
+        <span *ngIf="isLoading" class="spinner"></span>
+        Verify OTP
+      </button>
+    </ng-container>
+
+    <ng-container *ngIf="otpVerified">
+      <p class="success-message">OTP verified successfully!</p>
+      <button type="submit" [disabled]="isLoading">
+        <span *ngIf="isLoading" class="spinner"></span>
+        Complete Registration
+      </button>
+    </ng-container>
+
+    <p class="form-link">
+      Already have an account? <a routerLink="/login">Login here</a>
+    </p>
+  </form>
+</div>

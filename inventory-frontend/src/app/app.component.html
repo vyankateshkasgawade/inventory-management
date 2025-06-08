@@ -1,0 +1,28 @@
+<header class="app-header">
+  <nav class="app-nav">
+    <!-- <a routerLink="/">Home</a>
+    <a routerLink="/products">Products</a>
+    <a routerLink="/my-wishlist">My Wishlist</a> -->
+    </nav>
+
+  <div class="theme-switcher">
+    <button (click)="toggleTheme()" class="theme-toggle-button">
+      <ng-container *ngIf="currentTheme === 'light'">
+        Switch to Dark Mode
+        <i class="fas fa-moon"></i>
+      </ng-container>
+      <ng-container *ngIf="currentTheme === 'dark'">
+        Switch to Light Mode
+        <i class="fas fa-sun"></i>
+      </ng-container>
+    </button>
+  </div>
+</header>
+
+<main class="app-main-content">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="app-footer">
+  <p>&copy; Sanshraya Technologies Pvt. Ltd. All rights reserved.</p>
+</footer>

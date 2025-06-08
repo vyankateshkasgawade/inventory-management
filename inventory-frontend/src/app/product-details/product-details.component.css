@@ -1,0 +1,423 @@
+/* Product Management Component CSS (e.g., product-management.component.css) */
+
+/* General container styling */
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--primary-background); /* Overall background of the page content */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+h2, h3 {
+  color: var(--heading-color); /* Use variable for headings */
+  margin-bottom: 20px;
+  transition: color 0.3s ease;
+}
+
+/* Form styling (Add/Edit Product Form) */
+.product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 20px;
+  border: 1px solid var(--border-color); /* Use variable */
+  border-radius: 8px;
+  background-color: var(--card-background); /* Use variable for form background */
+  box-shadow: 0 2px 4px var(--box-shadow-color); /* Use variable */
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-form mat-form-field {
+  width: 100%;
+}
+
+/* Specific styling for Material input fields to ensure they respect theme */
+.product-form .mat-form-field-appearance-fill .mat-form-field-flex,
+.product-form .mat-form-field-appearance-outline .mat-form-field-flex {
+    background-color: var(--secondary-background); /* Background of the input area */
+    transition: background-color 0.3s ease;
+}
+
+.product-form .mat-form-field-flex input,
+.product-form .mat-form-field-flex textarea {
+    color: var(--text-color); /* Text inside input fields */
+    transition: color 0.3s ease;
+}
+
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: var(--text-color); /* Use variable for labels */
+  transition: color 0.3s ease;
+}
+
+/* Button styling (Angular Material raised buttons) */
+button[mat-raised-button] {
+  margin-bottom: 20px;
+  background-color: var(--primary-button-background); /* Use primary button background */
+  color: var(--primary-button-text); /* Use primary button text color */
+  transition: background-color 0.3s ease, color 0.3s ease, filter 0.3s ease;
+}
+
+button[mat-raised-button]:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+button[mat-raised-button]:disabled {
+  background-color: color-mix(in srgb, var(--primary-button-background) 50%, var(--primary-background));
+  color: color-mix(in srgb, var(--primary-button-text) 50%, var(--text-color-light));
+  cursor: not-allowed;
+}
+
+
+/* File input styling */
+input[type="file"] {
+  padding: 8px;
+  border: 1px solid var(--border-color); /* Use variable */
+  border-radius: 4px;
+  background-color: var(--secondary-background); /* Use variable */
+  color: var(--text-color); /* Text color for file input if visible */
+  cursor: pointer;
+  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Image preview styling */
+.image-preview {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  border: 1px dashed var(--border-color); /* Use variable */
+  padding: 10px;
+  border-radius: 8px;
+  background-color: var(--secondary-background); /* Use variable */
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.image-preview img {
+  max-width: 120px;
+  height: auto;
+  border: 1px solid var(--border-color); /* Use variable */
+  border-radius: 4px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  transition: border-color 0.3s ease;
+}
+
+/* Divider styling */
+mat-divider {
+  margin: 30px 0;
+  border-top-color: var(--border-color); /* Use variable */
+  transition: border-top-color 0.3s ease;
+}
+
+/* Product grid layout */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Product card styling */
+.product-card {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--card-background); /* Use variable */
+  box-shadow: 0 4px 8px var(--box-shadow-color); /* Use variable */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px var(--box-shadow-color-hover); /* Use a slightly darker shadow on hover */
+}
+
+.product-card mat-card-image {
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--border-color); /* Use variable */
+  transition: border-color 0.3s ease;
+}
+
+.product-card mat-card-header {
+  padding: 16px;
+  padding-bottom: 0;
+}
+
+.product-card mat-card-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--heading-color); /* Use variable */
+  margin-bottom: 5px;
+  transition: color 0.3s ease;
+}
+
+.product-card mat-card-subtitle {
+  color: var(--text-color-light); /* Use variable for subtitle */
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.product-card mat-card-content {
+  padding: 16px;
+  font-size: 0.95rem;
+  flex-grow: 1;
+  color: var(--text-color); /* Use variable for content text */
+  transition: color 0.3s ease;
+}
+
+.product-card mat-card-content p {
+  margin-bottom: 8px;
+}
+
+/* Status styling */
+.active-status {
+  color: #00FF00 !important; /* Force green color for active status text */
+  font-weight: bold;
+  background-color: var(--success-background); /* Use success background color */
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.inactive-status {
+  color: var(--error-text); /* Use error text color */
+  font-weight: bold;
+  background-color: var(--error-background); /* Use error background color */
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+/* --- UPDATED FOR DARK MODE STATUS VISIBILITY --- */
+/* Removed the override for active-status to allow green to show */
+body.dark-theme .inactive-status {
+  color: white !important; /* Force white text for inactive status in dark mode */
+}
+/* ---------------------------------------------------- */
+
+
+/* Card actions */
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 16px 16px;
+  border-top: 1px solid var(--border-color); /* Use variable */
+  transition: border-color 0.3s ease;
+}
+
+.mat-icon-button {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  color: var(--text-color); /* Default icon color */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.mat-icon-button:hover {
+  background-color: var(--secondary-background); /* Background on hover for icons */
+}
+
+.mat-icon-button mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+/* Edit form styling (within a product card) */
+.edit-card-form {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: var(--card-background); /* Ensure consistency if it's a dialog/popup */
+  transition: background-color 0.3s ease;
+}
+
+.edit-card-form mat-form-field {
+  width: 100%;
+}
+
+.edit-card-form small {
+  text-align: center;
+  color: var(--text-color-light); /* Use variable */
+  font-size: 0.8em;
+  margin-top: -5px;
+  transition: color 0.3s ease;
+}
+
+/* Filter section styling */
+.filter-section {
+  margin: 20px 0;
+  padding: 15px; /* Add padding to the filter section */
+  background-color: var(--card-background); /* Apply card background to filter section */
+  border-radius: 8px;
+  box-shadow: 0 1px 4px var(--box-shadow-color);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.filter-section mat-form-field {
+  width: 100%;
+}
+
+/* Admin section styling */
+.admin-section {
+  margin: 30px 0;
+  padding: 20px;
+  background-color: var(--secondary-background); /* Use secondary background for admin section */
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow-color);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-section h3 {
+  margin-top: 0;
+}
+
+.filter-products-admin {
+  margin-bottom: 20px;
+}
+
+.filter-products-admin mat-form-field {
+  width: 100%;
+}
+
+/* Product sequence table styling */
+.product-sequence-table {
+  background-color: var(--card-background); /* Use card background for the table */
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px var(--box-shadow-color);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-sequence-table mat-list {
+  padding: 0;
+}
+
+.product-sequence-table mat-list-item {
+  height: auto !important;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-color); /* Border for list items */
+  color: var(--text-color); /* Text color for list item */
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+.product-sequence-table mat-list-item:last-child {
+  border-bottom: none;
+}
+
+
+.product-sequence-table img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 15px;
+  border: 1px solid var(--border-color); /* Border for image thumbnails */
+  transition: border-color 0.3s ease;
+}
+
+.sequence-input {
+  margin-left: auto;
+  width: 100px !important;
+  background-color: var(--secondary-background); /* Background for sequence input */
+  color: var(--text-color); /* Text color in sequence input */
+  border: 1px solid var(--border-color); /* Border for sequence input */
+  border-radius: 4px;
+  padding: 5px 8px;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.sequence-input:focus {
+  border-color: var(--primary-button-background);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-button-background) 25%, transparent);
+  outline: none;
+}
+
+
+/* Checkbox styling */
+mat-checkbox {
+  margin-bottom: 15px;
+  display: block;
+  color: var(--text-color); /* Text color for checkbox label */
+  transition: color 0.3s ease;
+}
+/* Angular Material checkbox specific styling for the checkmark/box */
+/* You might need to adjust your global Angular Material theme if these aren't picking up theme colors */
+/* For example, in your theme.scss:
+.light-theme {
+  @include mat.checkbox-color($your-light-checkbox-palette);
+}
+.dark-theme {
+  @include mat.checkbox-color($your-dark-checkbox-palette);
+}
+*/
+
+
+/* Icon alignment in content */
+.product-card mat-card-content mat-icon {
+  vertical-align: middle;
+  margin-right: 5px;
+  color: var(--text-color-light); /* Icon color within content */
+  transition: color 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 15px;
+  }
+  
+  .product-card mat-card-image {
+    height: 180px;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .container {
+    padding: 15px;
+  }
+  
+  .product-form, .product-card {
+    padding: 15px;
+  }
+  
+  .product-sequence-table mat-list-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .sequence-input {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100% !important;
+  }
+}

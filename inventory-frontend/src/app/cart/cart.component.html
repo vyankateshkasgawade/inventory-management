@@ -1,0 +1,73 @@
+<div class="cart-container">
+  <h2>Your Shopping Cart</h2>
+
+  <div *ngIf="cartItems.length === 0" class="empty-cart-message">
+    <p>Your cart is empty.</p>
+    <button mat-raised-button color="primary" routerLink="/dashboard">
+      <mat-icon>shopping_cart</mat-icon> Start Shopping
+    </button>
+  </div>
+
+  <div *ngIf="cartItems.length > 0" class="cart-table-container mat-elevation-z8">
+    <table mat-table [dataSource]="cartItems" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="image">
+        <th mat-header-cell *matHeaderCellDef> Image </th>
+        <td mat-cell *matCellDef="let element">
+          <img [src]="getProductImageUrl(element.imageUrl)" alt="{{ element.productName }}" class="cart-item-thumbnail">
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="product">
+        <th mat-header-cell *matHeaderCellDef> Product </th>
+        <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef> Quantity </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="quantity-control">
+            <button mat-icon-button (click)="decrementQuantity(element)" [disabled]="element.quantity === 1" matTooltip="Decrease quantity">
+              <mat-icon>remove_circle_outline</mat-icon>
+            </button>
+            <input type="number" [(ngModel)]="element.quantity" (change)="onQuantityChange(element)" min="1" class="quantity-input">
+            <button mat-icon-button (click)="incrementQuantity(element)" matTooltip="Increase quantity">
+              <mat-icon>add_circle_outline</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.price | currency:'INR'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef> Total </th>
+        <td mat-cell *matCellDef="let element"> {{element.finalTotalAmount | currency:'INR'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button color="warn" (click)="deleteCart(element.cartId!)" matTooltip="Remove Item">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <div class="cart-summary mat-elevation-z4">
+      <h3>Cart Summary</h3>
+      <p>Total Items in Cart: {{ cartItems.length }}</p>
+      <p class="grand-total">Grand Total: {{ getCartTotal() | currency:'INR' }}</p>
+      <button mat-raised-button color="accent" class="checkout-button" (click)="proceedToCheckout()" [disabled]="getCartTotal() <= 0">
+        <mat-icon>payment</mat-icon> Proceed to Checkout
+      </button>
+    </div>
+  </div>
+</div>
