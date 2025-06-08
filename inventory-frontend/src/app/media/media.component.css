@@ -1,0 +1,201 @@
+/* media.component.css */
+
+:host {
+  display: block;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+h2 {
+  color: #3f51b5; /* Material Design primary color */
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 2em;
+}
+
+h3 {
+  color: #5c6bc0; /* Slightly darker shade for subheadings */
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 5px;
+}
+
+.message {
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+  background-color: #e8f5e9; /* Light green for success */
+  color: #2e7d32; /* Dark green text */
+  border: 1px solid #a5d6a7;
+}
+
+/* Specific styling for error messages */
+.message.error {
+  background-color: #ffebee; /* Light red for error */
+  color: #c62828; /* Dark red text */
+  border: 1px solid #ef9a9a;
+}
+
+.upload-section {
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the start of the cross axis */
+}
+
+.upload-section input[type="file"] {
+  margin-bottom: 15px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  width: auto; /* Allow input to take natural width */
+}
+
+.upload-section button {
+  background-color: #3f51b5; /* Primary button color */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.upload-section button:hover:not(:disabled) {
+  background-color: #303f9f; /* Darker shade on hover */
+}
+
+.upload-section button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.media-list {
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.media-list > div { /* Style for "No media files uploaded yet." */
+  text-align: center;
+  color: #757575;
+  padding: 20px;
+  font-style: italic;
+}
+
+.media-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.media-list li {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px dashed #e0e0e0;
+  background-color: #ffffff;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.media-list li:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.media-list li img,
+.media-list li video {
+  max-width: 120px; /* Increased size for better visibility */
+  max-height: 90px;
+  width: auto;
+  height: auto;
+  margin-right: 20px;
+  border-radius: 4px;
+  object-fit: contain;
+  border: 1px solid #f0f0f0;
+}
+
+.media-list li p {
+  margin: 0;
+  flex-grow: 1; /* Allow text to take available space */
+  display: flex;
+  flex-wrap: wrap; /* Allow content to wrap */
+  align-items: center;
+  gap: 10px; /* Space between items in the paragraph */
+}
+
+.media-list li p a {
+  color: #1a73e8; /* Link blue */
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.media-list li p a:hover {
+  color: #0d47a1;
+  text-decoration: underline;
+}
+
+.media-list li p button {
+  background-color: #f44336; /* Red for delete */
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85em;
+  transition: background-color 0.3s ease;
+  margin-left: auto; /* Push delete button to the right */
+}
+
+.media-list li p button:hover {
+  background-color: #d32f2f;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .upload-section {
+    align-items: stretch; /* Stretch items to fill width */
+  }
+
+  .media-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .media-list li img,
+  .media-list li video {
+    margin-right: 0;
+    margin-bottom: 10px;
+    max-width: 100%; /* Allow images/videos to fill width */
+    height: auto;
+  }
+
+  .media-list li p {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .media-list li p button {
+    margin-left: 0; /* Remove auto-margin to align with other content */
+    width: 100%; /* Make delete button full width */
+    margin-top: 10px;
+  }
+}

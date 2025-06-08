@@ -1,0 +1,337 @@
+/* app-user.component.css */
+
+/*
+  IMPORTANT: These :root and body.dark-theme blocks define the CSS variables.
+  For the dark theme to activate, the 'dark-theme' class MUST be applied
+  to the <body> tag of your HTML document by your Angular application's
+  TypeScript logic (typically in app.component.ts).
+  This CSS file alone cannot apply that class or trigger the theme change.
+
+  This CSS uses variables. The previous one did not, which is why colors weren't changing.
+*/
+
+/* --- Light Theme Variables (Default) --- */
+:root {
+  --primary-background: #f5f5f5; /* Main page background */
+  --card-background: #ffffff; /* Card surfaces (profile card, message cards) */
+  --secondary-background: #f7f7f7; /* Input field background, very light */
+  --text-color: #1a1a1a; /* Dark text for headings and general content */
+  --text-color-light: #555; /* Lighter text for labels */
+  --border-color-light: #ddd; /* Light border for cards */
+  --border-color-medium: #c9c9c9; /* Medium border for input underlines */
+  --border-color-dark: #eee; /* Slightly darker border for separators */
+  --box-shadow-color: rgba(0,0,0,.08); /* Subtle shadow */
+
+  --button-primary-background: #f0c14b; /* Amazon's primary button yellow */
+  --button-primary-text: #111; /* Dark text on primary button */
+  --button-primary-border: #a88734; /* Darker border for primary button */
+
+  --link-color: #007185; /* Amazon's link blue */
+  --link-hover-color: #c45500; /* Amazon's orange hover for links */
+
+  --focus-color: #f0c14b; /* Amazon's orange focus color */
+
+  --success-icon-color: #4CAF50; /* Green for success icons */
+  --error-icon-color: #D32F2F; /* Red for error icons */
+}
+
+/* --- Dark Theme Variables --- */
+body.dark-theme {
+  --primary-background: #121212; /* Very dark background */
+  --card-background: #1e1e1e; /* Dark grey for card surfaces */
+  --secondary-background: #2c2c2c; /* Mid-dark for input field background */
+  --text-color: #e0e0e0; /* Light grey text for content and headings */
+  --text-color-light: #b0b0b0; /* Lighter grey for labels */
+  --border-color-light: #424242; /* Darker border for cards */
+  --border-color-medium: #555; /* Darker border for input underlines */
+  --border-color-dark: #3a3a3a; /* Even darker border for separators */
+  --box-shadow-color: rgba(0,0,0,0.5); /* More prominent shadow in dark mode */
+
+  --button-primary-background: #ffd54f; /* Lighter yellow for primary button in dark mode */
+  --button-primary-text: #1e1e1e; /* Dark text on light primary button */
+  --button-primary-border: #b08d00; /* Darker border for primary button */
+
+  --link-color: #64b5f6; /* Lighter blue for links in dark mode */
+  --link-hover-color: #ff9800; /* Orange hover for links */
+
+  --focus-color: #ffd54f; /* Lighter orange focus color */
+
+  --success-icon-color: #a5d6a7; /* Lighter green for success icons */
+  --error-icon-color: #ef9a9a; /* Lighter red for error icons */
+}
+
+
+/* General container and page title */
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 20px;
+    background-color: var(--primary-background); /* Use variable */
+    color: var(--text-color); /* Use variable */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--text-color); /* Use variable */
+    margin-bottom: 25px;
+    text-align: left;
+    transition: color 0.3s ease;
+}
+
+/* Message Cards (Success/Error) */
+.message-card {
+    background-color: var(--card-background); /* Use variable */
+    border: 1px solid var(--border-color-light); /* Use variable */
+    border-radius: 4px;
+    padding: 10px 15px;
+    box-shadow: none;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.message-card .message-content {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: var(--text-color); /* Inherit or use variable */
+}
+
+.message-card .message-icon {
+    margin-right: 10px;
+}
+
+.message-card mat-icon[color="primary"] {
+    color: var(--success-icon-color) !important; /* Use variable */
+    transition: color 0.3s ease;
+}
+
+.message-card mat-icon[color="warn"] {
+    color: var(--error-icon-color) !important; /* Use variable */
+    transition: color 0.3s ease;
+}
+
+/* Profile Card */
+.profile-card {
+    background-color: var(--card-background); /* Use variable */
+    border: 1px solid var(--border-color-light); /* Use variable */
+    border-radius: 8px;
+    box-shadow: 0 1px 3px var(--box-shadow-color); /* Use variable */
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-card .card-header {
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.profile-card .card-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-color); /* Use variable */
+    transition: color 0.3s ease;
+}
+
+.profile-card .mat-card-content {
+    padding: 0;
+}
+
+/* Form Fields */
+.full-width {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+/* Mat Input field styling (to look flatter/more Amazon-like) */
+.mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: var(--secondary-background); /* Use variable */
+    border-radius: 4px 4px 0 0;
+    padding: 0 12px 0 12px !important;
+    transition: background-color 0.3s ease;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-underline::before {
+    background-color: var(--border-color-medium); /* Use variable */
+    transition: background-color 0.3s ease;
+}
+
+.mat-form-field-appearance-fill.mat-focused .mat-form-field-underline::after {
+    background-color: var(--focus-color); /* Use variable */
+    transition: background-color 0.3s ease;
+}
+
+.mat-form-field.mat-focused .mat-form-field-label {
+    color: var(--focus-color); /* Use variable */
+    transition: color 0.3s ease;
+}
+
+.mat-form-field-label {
+    color: var(--text-color-light); /* Use variable */
+    transition: color 0.3s ease;
+}
+
+/* Email field group with edit icon */
+.email-field-group {
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.email-field-group mat-form-field {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.email-field-group button {
+    margin-bottom: 5px;
+    color: var(--link-color); /* Use variable */
+    transition: color 0.3s ease;
+}
+.email-field-group button:hover {
+    color: var(--link-hover-color); /* Use variable */
+}
+
+/* Email OTP Section */
+.email-otp-section {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-end;
+    padding: 15px;
+    background-color: var(--secondary-background); /* Use variable */
+    border: 1px solid var(--border-color-dark); /* Use variable */
+    border-radius: 8px;
+    margin-bottom: 25px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.email-otp-section mat-form-field {
+    flex-grow: 1;
+    min-width: 200px;
+}
+
+.email-otp-section button {
+    height: 56px;
+    margin-bottom: 5px;
+}
+
+.send-otp-button, .verify-otp-button {
+    background-color: var(--button-primary-background); /* Use variable */
+    color: var(--button-primary-text); /* Use variable */
+    border: 1px solid var(--button-primary-border); /* Use variable */
+    font-weight: normal;
+    padding: 0 15px;
+    line-height: 54px;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.send-otp-button:hover, .verify-otp-button:hover {
+    filter: brightness(1.1); /* Keep general hover effect */
+    /* You could also define hover specific variables like:
+    background-color: var(--button-primary-hover-background);
+    border-color: var(--button-primary-hover-border); */
+}
+
+/* Form Actions */
+.form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color-dark); /* Use variable */
+    transition: border-top 0.3s ease;
+}
+
+.form-actions button {
+    margin-left: 10px;
+    padding: 0 20px;
+    height: 38px;
+    line-height: 38px;
+    font-size: 14px;
+}
+
+.form-actions button[type="submit"] {
+    background-color: var(--button-primary-background); /* Use variable */
+    color: var(--button-primary-text); /* Use variable */
+    border: 1px solid var(--button-primary-border); /* Use variable */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.form-actions button[type="submit"]:hover {
+    filter: brightness(1.1);
+}
+
+.form-actions .mat-button {
+    color: var(--link-color); /* Use variable */
+    transition: color 0.3s ease;
+}
+.form-actions .mat-button:hover {
+    color: var(--link-hover-color); /* Use variable */
+}
+
+/* Spinner inside buttons */
+.spinner {
+    margin-right: 8px;
+}
+
+/* No Profile Message */
+.no-profile-message {
+    text-align: center;
+    padding: 30px;
+    border: 1px solid var(--border-color-light); /* Use variable */
+    border-radius: 8px;
+    background-color: var(--card-background); /* Use variable */
+    margin-top: 20px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.no-profile-message p {
+    font-size: 16px;
+    color: var(--text-color-light); /* Use variable */
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        margin: 15px;
+    }
+    .profile-card {
+        padding: 15px;
+    }
+    .email-otp-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .email-otp-section button {
+        width: 100%;
+        margin-bottom: 0;
+    }
+    .email-field-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .email-field-group mat-form-field {
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 599px) {
+    .page-title {
+        font-size: 20px;
+    }
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .form-actions button {
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+}

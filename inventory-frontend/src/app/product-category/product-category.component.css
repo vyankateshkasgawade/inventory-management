@@ -1,0 +1,107 @@
+/* category.component.css (assuming this is for a category management component) */
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+  /* Apply a background to the container if it's the primary content area */
+  background-color: var(--secondary-background); /* Use variable for container background */
+  border-radius: 8px; /* Optional: add some rounded corners */
+  box-shadow: 0 2px 10px var(--box-shadow-color); /* Optional: add a subtle shadow */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--heading-color); /* Use variable for heading color */
+  transition: color 0.3s ease; /* Smooth transition */
+}
+
+/* Assuming these are Angular Material form fields */
+.category-input {
+  width: 70%;
+  margin-right: 10px;
+  /* Input field specific background/text/border */
+  background-color: var(--card-background); /* Background for the input field */
+  color: var(--text-color); /* Text color inside input */
+  border: 1px solid var(--border-color); /* Border for input */
+  border-radius: 4px; /* Match other inputs */
+  padding: 8px 12px; /* Add some padding */
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.category-input:focus {
+  border-color: var(--primary-button-background);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-button-background) 25%, transparent);
+  outline: none;
+}
+
+
+.my-divider {
+  margin: 20px 0;
+  border-color: var(--border-color); /* Use variable for divider color */
+  transition: border-color 0.3s ease;
+}
+
+.category-card {
+  margin-bottom: 12px;
+  background-color: var(--card-background); /* Background for individual category cards */
+  border: 1px solid var(--border-color); /* Border for cards */
+  border-radius: 8px;
+  box-shadow: 0 1px 4px var(--box-shadow-color); /* Subtle shadow for cards */
+  padding: 12px 15px; /* Add padding inside the card */
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-color); /* Text color for category item name */
+  transition: color 0.3s ease;
+}
+
+.edit-input {
+  width: 60%;
+  background-color: var(--secondary-background); /* Background for edit input */
+  color: var(--text-color); /* Text color inside edit input */
+  border: 1px solid var(--border-color); /* Border for edit input */
+  border-radius: 4px; /* Match other inputs */
+  padding: 6px 10px; /* Adjust padding for smaller input */
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.edit-input:focus {
+  border-color: var(--primary-button-background);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-button-background) 25%, transparent);
+  outline: none;
+}
+
+.action-buttons button {
+  margin-left: 5px;
+  /* Assuming these are Angular Material buttons or similar, apply theme variables */
+  background-color: var(--primary-button-background); /* Default for actions */
+  color: var(--primary-button-text);
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, filter 0.3s ease;
+}
+
+/* Specific button types, if applicable (e.g., delete/warn) */
+.action-buttons button.delete-btn { /* Add a class 'delete-btn' to your delete buttons */
+  background-color: var(--error-text); /* Use error text color for delete */
+  color: var(--primary-button-text); /* White text on error button */
+}
+
+.action-buttons button.edit-btn { /* Add a class 'edit-btn' to your edit buttons */
+  background-color: var(--secondary-button-background); /* Use secondary color for edit */
+  color: var(--secondary-button-text);
+}
+
+
+.action-buttons button:hover {
+  filter: brightness(1.1); /* Subtle hover effect */
+}

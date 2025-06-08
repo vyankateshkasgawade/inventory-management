@@ -1,0 +1,229 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+
+/* Define global CSS Variables for Theming */
+
+/* Light Theme Variables (Default) */
+:root {
+  /* Primary Colors */
+  --primary-color: #3f51b5; /* Example: Deep Blue */
+  --accent-color: #ff4081;  /* Example: Pink */
+  --warn-color: #f44336;    /* Example: Red */
+
+  /* Backgrounds */
+  --primary-background: #ffffff; /* Light grey for content area */
+  --secondary-background: #f0f2f5; /* Background for sections/containers */
+  --card-background: #ffffff;      /* White for general cards */
+  --overlay-background: rgba(0, 0, 0, 0.5); /* Semi-transparent black for overlays */
+
+  /* Sidenav Specific */
+  --sidenav-background: #3f51b5;          /* Blue for light mode sidebar background */
+  --sidenav-header-background: #303F9F;   /* Darker blue for sidenav header */
+  --sidenav-header-color: #ffffff;        /* White text for sidenav header */
+  --sidenav-text-color: #ffffff;          /* White for navigation text in light mode */
+  --sidenav-icon-color: #ffffff;          /* White for navigation icons in light mode */
+  --sidenav-hover-background: #4a5dca;    /* Slightly lighter blue on hover */
+  --sidenav-active-background: #ff4081;   /* Example: Pink for active link background in light mode */
+  --sidenav-active-text-color: #ffffff;   /* WHITE for active link text in light mode */
+  --sidenav-active-icon-color: #ffffff;   /* WHITE for active link icon in light mode */
+
+  /* Text Colors */
+  --heading-color: #333333;           /* Dark grey for headings */
+  --text-color: #555555;             /* Medium grey for general text */
+  --text-color-light: #777777;        /* Lighter grey for subtle text */
+  --primary-button-text: #ffffff; /* White text for primary buttons */
+
+  /* Borders & Shadows */
+  --border-color: #e0e0e0;                  /* Light grey for borders */
+  --box-shadow-color: rgba(0, 0, 0, 0.1); /* Subtle shadow for cards */
+
+  /* Status Colors */
+  --success-text: #4caf50;          /* Green for success messages/status */
+  --error-text: #f44336;            /* Red for error messages/status */
+  --info-text: #ffffff;              /* White for info snackbars */
+  --success-background: #4caf50;    /* Green for success snackbar background */
+  --error-background: #f44336;      /* Red for error snackbar background */
+  --info-background: #2196f3;      /* Blue for info snackbar background */
+}
+
+/* Dark Theme Variables */
+body.dark-theme { /* Apply this class to your <body> tag or a main theme wrapper */
+  /* Primary Colors - Adjust as needed for dark mode palette */
+  --primary-color: #7986cb; /* Lighter blue for dark mode */
+  --accent-color: #f06292;  /* Lighter pink for dark mode */
+  --warn-color: #e57373;    /* Lighter red for dark mode */
+
+  /* Backgrounds */
+  --primary-background: #121212; /* Darkest background */
+  --secondary-background: #1e1e1e; /* Slightly lighter dark for panels/card inner */
+  --card-background: #2d2d2d;      /* Medium dark for general cards */
+  --overlay-background: rgba(0, 0, 0, 0.7); /* More opaque black for overlays */
+
+  /* Sidenav Specific */
+  --sidenav-background: #1e1e1e;          /* Dark sidebar background */
+  --sidenav-header-background: #333333;   /* Darker grey for sidenav header */
+  --sidenav-header-color: #e0e0e0;        /* Light grey for sidenav header text */
+  --sidenav-text-color: #ffffff;          /* WHITE for navigation text in dark mode */
+  --sidenav-icon-color: #ffffff;          /* WHITE for navigation icons in dark mode */
+  --sidenav-hover-background: #3a3a3a;    /* Darker grey on hover */
+  --sidenav-active-background: #4a4a4a;   /* Slightly lighter dark for active link background */
+  --sidenav-active-text-color: #ffffff;   /* WHITE for active link text */
+  --sidenav-active-icon-color: #ffffff;   /* WHITE for active link icon */
+
+  /* Text Colors */
+  --heading-color: #e0e0e0;           /* Light grey for headings */
+  --text-color: #b0b0b0;             /* Lighter grey for general text */
+  --text-color-light: #909090;        /* Even lighter grey for subtle text */
+  --primary-button-text: #ffffff; /* White text remains for primary buttons */
+
+  /* Borders & Shadows */
+  --border-color: #444444;                  /* Darker grey for borders */
+  --box-shadow-color: rgba(0, 0, 0, 0.5); /* More prominent shadow for cards */
+
+  /* Status Colors - Adjusted for better visibility on dark backgrounds */
+  --success-text: #66bb6a;
+  --error-text: #ef5350;
+  --info-text: #e0e0e0;
+  --success-background: #66bb6a;
+  --error-background: #ef5350;
+  --info-background: #42a5f5;
+}
+
+/* Apply base styles to the body, using CSS variables */
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: var(--primary-background); /* Use the primary background variable */
+  color: var(--text-color); /* Use the main text color variable */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for theme change */
+}
+
+/* Global heading styles for consistency */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading-color);
+  transition: color 0.3s ease; /* Added transition for headings */
+}
+
+/* Global button styles for consistency */
+button {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, filter 0.3s ease; /* Added filter transition for hover */
+}
+
+/* Global link styles for consistency (added) */
+a {
+    /* Changed to heading-color or a more distinct accent if needed for general links */
+    color: var(--heading-color); /* Default link color - using heading for visibility */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    filter: brightness(1.2); /* Slightly brighter on hover */
+}
+
+/* Spinner for loading states (added) */
+.spinner {
+  border: 4px solid var(--border-color); /* Uses a border color variable */
+  /* Changed --primary-color to --heading-color or --primary-button-background for the spin color */
+  border-top: 4px solid var(--primary-button-background); /* Uses primary color for spin */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 15px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* *** SIDENAV STYLES (Previously adjusted) *** */
+
+/* Ensure the sidenav header in dashboard.component.css picks up the color */
+.sidenav-header {
+  color: var(--sidenav-header-color);
+}
+
+/* Force dark mode sidenav text and icons to be white */
+body.dark-theme .sidenav .mat-nav-list .mat-mdc-list-item .mdc-list-item__primary-text,
+body.dark-theme .sidenav .mat-nav-list .mat-list-item .mat-list-item-content .mat-list-item-title,
+body.dark-theme .sidenav .mat-list-item .mat-list-item-content span {
+  color: var(--sidenav-text-color) !important;
+}
+
+body.dark-theme .sidenav .mat-nav-list .mat-mdc-list-item .mat-icon,
+body.dark-theme .sidenav .mat-nav-list .mat-list-item .mat-icon {
+  color: var(--sidenav-icon-color) !important;
+}
+
+/* Ensure active link text and icon are white in dark mode */
+body.dark-theme .sidenav .mat-nav-list .mat-mdc-list-item.active-link .mdc-list-item__primary-text,
+body.dark-theme .sidenav .mat-nav-list .mat-list-item.active-link .mat-list-item-content .mat-list-item-title,
+body.dark-theme .sidenav .mat-list-item.active-link .mat-list-item-content span {
+  color: var(--sidenav-active-text-color) !important;
+}
+
+body.dark-theme .sidenav .mat-nav-list .mat-mdc-list-item.active-link .mat-icon,
+body.dark-theme .sidenav .mat-nav-list .mat-list-item.active-link .mat-icon {
+  color: var(--sidenav-active-icon-color) !important;
+}
+
+/* Apply light mode sidenav background, text, and icon colors */
+:root .sidenav {
+  background-color: var(--sidenav-background);
+}
+
+:root .sidenav .mat-mdc-list-item .mdc-list-item__primary-text,
+:root .sidenav .mat-list-item .mat-list-item-content .mat-list-item-title,
+:root .sidenav .mat-list-item .mat-list-item-content span {
+  color: var(--sidenav-text-color);
+}
+
+:root .sidenav .mat-mdc-list-item .mat-icon,
+:root .sidenav .mat-list-item .mat-icon {
+  color: var(--sidenav-icon-color);
+}
+
+/* Active link colors for light mode (ensure they are white for contrast on pink background) */
+:root .sidenav .mat-mdc-list-item.active-link .mdc-list-item__primary-text,
+:root .sidenav .mat-list-item.active-link .mat-list-item-content .mat-list-item-title,
+:root .sidenav .mat-list-item.active-link .mat-list-item-content span {
+  color: var(--sidenav-active-text-color);
+}
+
+:root .sidenav .mat-mdc-list-item.active-link .mat-icon,
+:root .sidenav .mat-list-item.active-link .mat-icon {
+  color: var(--sidenav-active-icon-color);
+}
+
+
+/* *** PRODUCT WISHLIST BUTTON & HEART ICON STYLES (UPDATED) *** */
+
+/* Specific styling for the Wishlist button (in product actions) in dark mode */
+/* Targeting a button with class 'wishlist-button' within 'product-options-actions' */
+body.dark-theme .product-options-actions button.wishlist-button {
+    border: 1px solid white !important; /* Explicitly white border */
+    box-sizing: border-box;
+    color: white !important; /* Explicitly white text/icon color for the button */
+}
+
+/* Style for the heart icon at the bottom-left of the product card in dark mode */
+/* This assumes the heart icon is a mat-icon directly inside the product-card and you might use a class like 'product-card-heart-icon' */
+body.dark-theme .product-card .mat-icon.product-card-heart-icon {
+  color: white !important; /* Explicitly white color for the heart icon in dark mode */
+}
+/* If it's just a general mat-icon at the bottom of the card and not a button, you might need to adjust the selector */
+body.dark-theme .product-card .mat-icon { /* More general selector if no specific class is used */
+    color: white !important;
+}
+
+/* Ensure the heart icon also has a default color in light mode for consistency */
+.product-card .mat-icon.product-card-heart-icon,
+.product-card .mat-icon { /* Applies to both specific and general heart icons */
+    color: var(--text-color-light); /* Default light grey for light theme */
+    transition: color 0.3s ease;
+}
+
+/* ********************************************* */

@@ -1,0 +1,244 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav mode="side" opened class="sidenav" #sidenav>
+    <mat-toolbar color="primary">IMS Dashboard</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item *ngIf="authService.hasRole('ROLE_ADMIN')" routerLink="/users">
+        <mat-icon>group</mat-icon> User Management
+      </a>
+
+      <a mat-list-item routerLink="/profile">
+        <mat-icon>account_circle</mat-icon> My Profile
+      </a>
+
+      <a mat-list-item *ngIf="authService.hasRole('ROLE_ADMIN')" routerLink="/product-categories">
+        <mat-icon>category</mat-icon> Product Categories
+      </a>
+
+      <a mat-list-item *ngIf="authService.hasRole('ROLE_ADMIN')" routerLink="/products">
+        <mat-icon>inventory_2</mat-icon> Product Details
+      </a>
+
+      <a mat-list-item routerLink="/purchases">
+        <mat-icon>receipt_long</mat-icon> Purchase Details
+      </a>
+      <a mat-list-item routerLink="/wishlist">
+        <mat-icon>favorite</mat-icon> My Wishlist
+      </a>
+
+      <a mat-list-item routerLink="/media">
+        <mat-icon>perm_media</mat-icon> Media
+      </a>
+      </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="top-toolbar">
+      <button mat-icon-button class="sidenav-toggle-button" (click)="toggleSidenav()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="toolbar-title">Inventory Management System</span>
+      <span class="toolbar-spacer"></span>
+
+      <button mat-icon-button routerLink="/cart"
+              [matBadge]="cartItemCount"
+              [matBadgeHidden]="cartItemCount === 0"
+              matBadgeColor="accent"
+              matTooltip="View Cart">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+
+      <button mat-button (click)="authService.logout()">Logout</button>
+    </mat-toolbar>
+
+    <div class="content">
+      <div *ngIf="isHomeRoute()">
+        <div class="dashboard-products-display">
+          <h2>Top Trending Products</h2>
+          <mat-divider></mat-divider>
+          <mat-accordion class="product-categories-accordion">
+            <mat-expansion-panel [expanded]="topTrendingProducts.length > 0">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <h3>Trending Items ({{ topTrendingProducts.length }})</h3>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="product-grid" *ngIf="topTrendingProducts.length > 0">
+                <mat-card class="product-card" *ngFor="let product of topTrendingProducts" (click)="openProductOptions(product)">
+                  <img mat-card-image [src]="getProductImageUrl(product.imageUrl)" alt="Product Image">
+                  <mat-card-header>
+                    <mat-card-title>{{ product.productName }}</mat-card-title>
+                    <mat-card-subtitle>{{ product.productCategoryName }}</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <p><strong>Price:</strong> {{ product.price | currency }}</p>
+                    <p><strong>Quantity:</strong> {{ product.productQuantity }}</p>
+                    <p>
+                      <strong>Status:</strong>
+                      <span [ngClass]="product.isActive ? 'active-status' : 'inactive-status'">
+                        {{ product.isActive ? 'Active' : 'Inactive' }}
+                      </span>
+                    </p>
+                  </mat-card-content>
+                  <mat-card-actions class="product-actions">
+                    <button mat-icon-button *ngIf="isLoggedIn"
+                            (click)="$event.stopPropagation(); isProductInWishlist(product.productDetailsId!) ? removeFromWishlist(getWishlistIdForProduct(product.productDetailsId!)!) : addToWishlist(product.productDetailsId!)"
+                            [color]="isProductInWishlist(product.productDetailsId!) ? 'warn' : ''"
+                            matTooltip="{{ isProductInWishlist(product.productDetailsId!) ? 'Remove from Wishlist' : 'Add to Wishlist' }}">
+                      <mat-icon [ngStyle]="{'color': isProductInWishlist(product.productDetailsId!) ? 'red' : ''}">{{ isProductInWishlist(product.productDetailsId!) ? 'favorite' : 'favorite_border' }}</mat-icon>
+                    </button>
+                  </mat-card-actions>
+                </mat-card>
+              </div>
+              <div *ngIf="topTrendingProducts.length === 0" class="no-products-message">
+                <p>No top trending products available.</p>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+
+        <div class="dashboard-products-display">
+          <h2>Top Selling Products</h2>
+          <mat-divider></mat-divider>
+          <mat-accordion class="product-categories-accordion">
+            <mat-expansion-panel [expanded]="topSellingProducts.length > 0">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <h3>Best Sellers ({{ topSellingProducts.length }})</h3>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="product-grid" *ngIf="topSellingProducts.length > 0">
+                <mat-card class="product-card" *ngFor="let product of topSellingProducts" (click)="openProductOptions(product)">
+                  <img mat-card-image [src]="getProductImageUrl(product.imageUrl)" alt="Product Image">
+                  <mat-card-header>
+                    <mat-card-title>{{ product.productName }}</mat-card-title>
+                    <mat-card-subtitle>{{ product.productCategoryName }}</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <p><strong>Price:</strong> {{ product.price | currency }}</p>
+                    <p><strong>Quantity:</strong> {{ product.productQuantity }}</p>
+                    <p>
+                      <strong>Status:</strong>
+                      <span [ngClass]="product.isActive ? 'active-status' : 'inactive-status'">
+                        {{ product.isActive ? 'Active' : 'Inactive' }}
+                      </span>
+                    </p>
+                  </mat-card-content>
+                  <mat-card-actions class="product-actions">
+                    <button mat-icon-button *ngIf="isLoggedIn"
+                            (click)="$event.stopPropagation(); isProductInWishlist(product.productDetailsId!) ? removeFromWishlist(getWishlistIdForProduct(product.productDetailsId!)!) : addToWishlist(product.productDetailsId!)"
+                            [color]="isProductInWishlist(product.productDetailsId!) ? 'warn' : ''"
+                            matTooltip="{{ isProductInWishlist(product.productDetailsId!) ? 'Remove from Wishlist' : 'Add to Wishlist' }}">
+                      <mat-icon [ngStyle]="{'color': isProductInWishlist(product.productDetailsId!) ? 'red' : ''}">{{ isProductInWishlist(product.productDetailsId!) ? 'favorite' : 'favorite_border' }}</mat-icon>
+                    </button>
+                  </mat-card-actions>
+                </mat-card>
+              </div>
+              <div *ngIf="topSellingProducts.length === 0" class="no-products-message">
+                <p>No top selling products available.</p>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+
+        <div class="dashboard-products-display">
+          <h2>Products Overview</h2>
+          <mat-divider></mat-divider>
+
+          <div class="category-filter-container">
+            <mat-form-field appearance="outline" class="category-select-field">
+              <mat-label>Filter by Category</mat-label>
+              <mat-select [(ngModel)]="selectedCategoryName" (selectionChange)="onCategoryChange()">
+                <mat-option *ngFor="let category of categories" [value]="category.productCategoryName">
+                  {{ category.productCategoryName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <mat-accordion class="product-categories-accordion">
+            <mat-expansion-panel *ngFor="let categoryGroup of productsGroupedByCategory" expanded>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <h3>{{ categoryGroup.categoryName }} ({{ categoryGroup.products.length }})</h3>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="product-grid">
+                <mat-card class="product-card" *ngFor="let product of categoryGroup.products" (click)="openProductOptions(product)">
+                  <img mat-card-image [src]="getProductImageUrl(product.imageUrl)" alt="Product Image">
+                  <mat-card-header>
+                    <mat-card-title>{{ product.productName }}</mat-card-title>
+                    <mat-card-subtitle>{{ product.productCategoryName }}</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <p><strong>Price:</strong> {{ product.price | currency }}</p>
+                    <p><strong>Quantity:</strong> {{ product.productQuantity }}</p>
+                    <p>
+                      <strong>Status:</strong>
+                      <span [ngClass]="product.isActive ? 'active-status' : 'inactive-status'">
+                        {{ product.isActive ? 'Active' : 'Inactive' }}
+                      </span>
+                    </p>
+                  </mat-card-content>
+                  <mat-card-actions class="product-actions">
+                    <button mat-icon-button *ngIf="isLoggedIn"
+                            (click)="$event.stopPropagation(); isProductInWishlist(product.productDetailsId!) ? removeFromWishlist(getWishlistIdForProduct(product.productDetailsId!)!) : addToWishlist(product.productDetailsId!)"
+                            [color]="isProductInWishlist(product.productDetailsId!) ? 'warn' : ''"
+                            matTooltip="{{ isProductInWishlist(product.productDetailsId!) ? 'Remove from Wishlist' : 'Add to Wishlist' }}">
+                      <mat-icon [ngStyle]="{'color': isProductInWishlist(product.productDetailsId!) ? 'red' : ''}">{{ isProductInWishlist(product.productDetailsId!) ? 'favorite' : 'favorite_border' }}</mat-icon>
+                    </button>
+                  </mat-card-actions>
+                </mat-card>
+              </div>
+              <div *ngIf="categoryGroup.products.length === 0" class="no-products-message">
+                <p>No products found in this category.</p>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+          <div *ngIf="productsGroupedByCategory.length === 0 && selectedCategoryName !== 'All' && products.length === 0" class="no-products-message">
+            <p>No products found for the selected category: <strong>{{ selectedCategoryName }}</strong>.</p>
+          </div>
+          <div *ngIf="productsGroupedByCategory.length === 0 && selectedCategoryName === 'All' && products.length === 0" class="no-products-message">
+            <p>No products found in the inventory.</p>
+          </div>
+        </div>
+      </div>
+
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<div class="product-options-overlay" *ngIf="selectedProduct">
+  <mat-card class="product-options-card">
+    <mat-card-header>
+      <mat-card-title>{{ selectedProduct.productName }}</mat-card-title>
+      <mat-card-subtitle>{{ selectedProduct.productCategoryName }}</mat-card-subtitle>
+      <button mat-icon-button class="close-button" (click)="closeProductOptions()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-card-header>
+    <mat-card-content>
+      <img mat-card-image [src]="getProductImageUrl(selectedProduct.imageUrl)" alt="Product Image">
+      <p><strong>Price:</strong> {{ selectedProduct.price | currency }}</p>
+      <p><strong>Quantity:</strong> {{ selectedProduct.productQuantity }}</p>
+    </mat-card-content>
+    <mat-card-actions class="product-options-actions">
+      <button mat-raised-button color="primary" (click)="addToCart(selectedProduct)"
+              [disabled]="selectedProduct.productQuantity <= 0 || !selectedProduct.isActive">
+        <mat-icon>add_shopping_cart</mat-icon> Add to Cart
+      </button>
+      <button mat-raised-button color="accent" (click)="buyNow(selectedProduct)">
+        <mat-icon>shopping_bag</mat-icon> Buy Now
+      </button>
+      <button mat-raised-button
+              (click)="$event.stopPropagation(); isProductInWishlist(selectedProduct.productDetailsId!) ? removeFromWishlist(getWishlistIdForProduct(selectedProduct.productDetailsId!)!) : addToWishlist(selectedProduct.productDetailsId!)"
+              [color]="isProductInWishlist(selectedProduct.productDetailsId!) ? 'warn' : ''">
+        <mat-icon [ngStyle]="{'color': isProductInWishlist(selectedProduct.productDetailsId!) ? 'red' : ''}">{{ isProductInWishlist(selectedProduct.productDetailsId!) ? 'favorite' : 'favorite_border' }}</mat-icon>
+        {{ isProductInWishlist(selectedProduct.productDetailsId!) ? 'Remove from Wishlist' : 'Add to Wishlist' }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

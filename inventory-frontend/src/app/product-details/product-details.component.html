@@ -1,0 +1,282 @@
+<div class="container">
+  <h2>Product Details</h2>
+
+  <button mat-raised-button color="primary" (click)="showAddForm = true" *ngIf="!showAddForm">
+    Add Product
+  </button>
+
+  <form class="product-form" *ngIf="showAddForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="newProduct.productName" name="productName" placeholder="Enter product name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Quantity</mat-label>
+      <input matInput type="number" [(ngModel)]="newProduct.productQuantity" name="productQuantity" placeholder="Enter quantity" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Price</mat-label>
+      <input matInput type="number" [(ngModel)]="newProduct.price" name="price" placeholder="Enter price" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Category</mat-label>
+      <mat-select [(ngModel)]="newProduct.productCategoryId" name="productCategoryId">
+        <mat-option *ngFor="let category of categories" [value]="category.productCategoryId">
+          {{ category.productCategoryName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="form-group">
+      <label for="newProductImage">Product Image:</label>
+      <input type="file" id="newProductImage" (change)="onNewFileSelected($event)" accept="image/*">
+    </div>
+    <div *ngIf="newImagePreviewUrl" class="image-preview">
+      <img [src]="newImagePreviewUrl" alt="New Image Preview">
+    </div>
+
+    <button mat-raised-button color="primary" (click)="createProduct()">Add Product</button>
+    <button mat-button color="warn" type="button" (click)="cancelAdd()">Cancel</button>
+  </form>
+
+  <mat-divider></mat-divider>
+
+  <div class="filter-section">
+    <mat-form-field appearance="fill">
+      <mat-label>Filter Products</mat-label>
+      <mat-select [(ngModel)]="selectedFilter" (selectionChange)="applyFilter()">
+        <mat-option value="all">All Products</mat-option>
+        <mat-option value="trending">Top Trending Products</mat-option>
+        <mat-option value="selling">Top Selling Products</mat-option>
+        <mat-optgroup label="By Category">
+          <mat-option *ngFor="let category of categories" [value]="category.productCategoryId">
+            {{ category.productCategoryName }}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+
+  <div class="product-grid">
+    <mat-card class="product-card" *ngFor="let product of products">
+      <div *ngIf="editingProductId !== product.productDetailsId">
+        <img mat-card-image [src]="getProductImageUrl(product.imageUrl)" alt="Product Image">
+        <mat-card-header>
+          <mat-card-title>{{ product.productName }}</mat-card-title>
+          <mat-card-subtitle>{{ product.productCategoryName }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p><strong>Price:</strong> {{ product.price | currency }}</p>
+          <p><strong>Quantity:</strong> {{ product.productQuantity }}</p>
+          <p>
+            <strong>Status:</strong>
+            <span [ngClass]="product.isActive ? 'active-status' : 'inactive-status'">
+              {{ product.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </p>
+          <p *ngIf="product.trendingDisplayOrder !== null">
+            <mat-icon color="accent">trending_up</mat-icon> <strong>Top Trending (Order: {{ product.trendingDisplayOrder }})</strong>
+          </p>
+          <p *ngIf="product.sellingDisplayOrder !== null">
+            <mat-icon color="warn">star</mat-icon> <strong>Top Selling (Order: {{ product.sellingDisplayOrder }})</strong>
+          </p>
+        </mat-card-content>
+        <mat-card-actions class="card-actions">
+          <button mat-icon-button color="accent" (click)="startEdit(product)" matTooltip="Edit">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteProduct(product.productDetailsId!)" matTooltip="Delete">
+            <mat-icon>delete</mat-icon>
+          </button>
+
+          <ng-container *ngIf="isLoggedIn; else loginToWishlist">
+            <button mat-icon-button color="primary" *ngIf="!isProductInWishlist(product.productDetailsId!)"
+                    (click)="addToWishlist(product.productDetailsId!)" matTooltip="Add to Wishlist">
+              <mat-icon>favorite_border</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" *ngIf="isProductInWishlist(product.productDetailsId!)"
+                    (click)="getWishlistIdForProduct(product.productDetailsId!) && removeFromWishlist(getWishlistIdForProduct(product.productDetailsId!)!)" matTooltip="Remove from Wishlist">
+              <mat-icon style="color: red;">favorite</mat-icon> </button>
+          </ng-container>
+          <ng-template #loginToWishlist>
+            <button mat-icon-button disabled matTooltip="Log in to add to wishlist">
+              <mat-icon>favorite_border</mat-icon>
+            </button>
+          </ng-template>
+          </mat-card-actions>
+      </div>
+
+      <div *ngIf="editingProductId === product.productDetailsId" class="edit-card-form">
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput [(ngModel)]="updatedProduct.productName" name="updatedProductName" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Quantity</mat-label>
+          <input matInput type="number" [(ngModel)]="updatedProduct.productQuantity" name="updatedProductQuantity" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Price</mat-label>
+          <input matInput type="number" [(ngModel)]="updatedProduct.price" name="updatedPrice" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Category</mat-label>
+          <mat-select [(ngModel)]="updatedProduct.productCategoryId" name="updatedProductCategoryId">
+            <mat-option *ngFor="let category of categories" [value]="category.productCategoryId">
+              {{ category.productCategoryName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="form-group">
+          <label for="editProductImage-{{product.productDetailsId}}">Product Image:</label>
+          <input type="file" id="editProductImage-{{product.productDetailsId}}" (change)="onEditFileSelected($event)" accept="image/*">
+        </div>
+        <div *ngIf="editImagePreviewUrl || product.imageUrl" class="image-preview">
+          <img
+            [src]="editImagePreviewUrl ? editImagePreviewUrl : getProductImageUrl(product.imageUrl)"
+            alt="Edit Image Preview"
+            class="product-thumbnail"
+          >
+        </div>
+        <small *ngIf="product.imageUrl && !selectedEditFile">Current: {{ product.imageUrl.split('/').pop() }}</small>
+        <button mat-button color="warn" *ngIf="updatedProduct.imageUrl || selectedEditFile" (click)="clearEditImage()">Clear</button>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="updatedProduct.isActive" name="updatedIsActive">
+            <mat-option [value]="true">Active</mat-option>
+            <mat-option [value]="false">Inactive</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-card-actions class="card-actions">
+          <button mat-icon-button color="primary" (click)="updateProduct()" matTooltip="Save">
+            <mat-icon>save</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="cancelEdit()" matTooltip="Cancel">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-card-actions>
+      </div>
+    </mat-card>
+  </div>
+
+  <mat-divider style="margin-top: 20px; margin-bottom: 20px;"></mat-divider>
+
+  <div class="wishlist-section" *ngIf="isLoggedIn">
+    <h2>My Wishlist</h2>
+    <div *ngIf="wishlistEntries.length === 0; else showWishlist">
+      <p>Your wishlist is empty.</p>
+    </div>
+    <ng-template #showWishlist>
+      <div class="product-grid">
+        <mat-card class="product-card" *ngFor="let entry of wishlistEntries">
+          <ng-container *ngIf="getProductDetailsForWishlist(entry.productId) as productInWishlist">
+            <img mat-card-image [src]="getProductImageUrl(productInWishlist.imageUrl)" alt="Product Image">
+            <mat-card-header>
+              <mat-card-title>{{ productInWishlist.productName }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p><strong>Price:</strong> {{ productInWishlist.price | currency }}</p>
+              </mat-card-content>
+            <mat-card-actions class="card-actions">
+              <button mat-icon-button color="warn" (click)="removeFromWishlist(entry.wishlistId!)" matTooltip="Remove from Wishlist">
+                <mat-icon style="color: red;">favorite</mat-icon> </button>
+            </mat-card-actions>
+          </ng-container>
+        </mat-card>
+      </div>
+    </ng-template>
+  </div>
+  <mat-divider style="margin-top: 20px; margin-bottom: 20px;"></mat-divider>
+
+  <div class="admin-section">
+    <h3>Manage Top Trending Products Sequence</h3>
+    <p>Set a sequence number (1 for highest priority) for products to appear in the "Top Trending" section. Leave blank to remove.</p>
+
+    <div class="filter-products-admin">
+      <mat-form-field appearance="fill">
+        <mat-label>Filter Products for Trending</mat-label>
+        <input matInput type="text" placeholder="Search by name or category" [(ngModel)]="trendingProductFilter" (input)="filterTrendingProducts()">
+      </mat-form-field>
+    </div>
+
+    <div class="product-sequence-table">
+      <mat-list>
+        <mat-list-item *ngIf="filteredProductsForTrending.length === 0">
+          <p>No products found or all are already trending.</p>
+        </mat-list-item>
+        <ng-container *ngFor="let product of filteredProductsForTrending">
+          <mat-list-item>
+            <img matListItemAvatar [src]="getProductImageUrl(product.imageUrl)" alt="Product thumbnail">
+            <h4 matListItemTitle>{{ product.productName }}</h4>
+            <p matListItemLine>Current Order: {{ product.trendingDisplayOrder || 'N/A' }}</p>
+            <mat-form-field appearance="fill" class="sequence-input">
+              <mat-label>Order</mat-label>
+              <input matInput type="number"
+                     [(ngModel)]="product.trendingDisplayOrder"
+                     (ngModelChange)="onTrendingOrderChange(product.productDetailsId!, $event)"
+                     name="trendingOrder_{{product.productDetailsId}}"
+                     placeholder="Seq. No."
+                     min="1" />
+            </mat-form-field>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-container>
+      </mat-list>
+      <button mat-raised-button color="primary" (click)="saveTrendingOrders()">
+        Save Trending Orders
+      </button>
+    </div>
+  </div>
+
+  <mat-divider style="margin-top: 20px; margin-bottom: 20px;"></mat-divider>
+
+  <div class="admin-section">
+    <h3>Manage Top Selling Products Sequence</h3>
+    <p>Set a sequence number (1 for highest priority) for products to appear in the "Top Selling" section. Leave blank to remove.</p>
+
+    <div class="filter-products-admin">
+      <mat-form-field appearance="fill">
+        <mat-label>Filter Products for Selling</mat-label>
+        <input matInput type="text" placeholder="Search by name or category" [(ngModel)]="sellingProductFilter" (input)="filterSellingProducts()">
+      </mat-form-field>
+    </div>
+
+    <div class="product-sequence-table">
+      <mat-list>
+        <mat-list-item *ngIf="filteredProductsForSelling.length === 0">
+          <p>No products found or all are already selling.</p>
+        </mat-list-item>
+        <ng-container *ngFor="let product of filteredProductsForSelling">
+          <mat-list-item>
+            <img matListItemAvatar [src]="getProductImageUrl(product.imageUrl)" alt="Product thumbnail">
+            <h4 matListItemTitle>{{ product.productName }}</h4>
+            <p matListItemLine>Current Order: {{ product.sellingDisplayOrder || 'N/A' }}</p>
+            <mat-form-field appearance="fill" class="sequence-input">
+              <mat-label>Order</mat-label>
+              <input matInput type="number"
+                     [(ngModel)]="product.sellingDisplayOrder"
+                     (ngModelChange)="onSellingOrderChange(product.productDetailsId!, $event)"
+                     name="sellingOrder_{{product.productDetailsId}}"
+                     placeholder="Seq. No."
+                     min="1" />
+            </mat-form-field>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-container>
+      </mat-list>
+      <button mat-raised-button color="primary" (click)="saveSellingOrders()">
+        Save Selling Orders
+      </button>
+    </div>
+  </div>
+</div>

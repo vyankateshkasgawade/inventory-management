@@ -1,0 +1,278 @@
+/* Cart Component Styles (e.g., src/app/cart/cart.component.css) */
+
+.cart-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 20px auto;
+  background-color: var(--secondary-background); /* Use variable */
+  border-radius: 8px;
+  box-shadow: 0 2px 10px var(--box-shadow-color); /* Use variable */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+h2 {
+  text-align: center;
+  color: var(--heading-color); /* Use variable, not specific Material Indigo */
+  margin-bottom: 25px;
+  transition: color 0.3s ease;
+}
+
+/* Styles for the "Add New Item to Cart" form */
+.add-to-cart-form-card {
+  margin-bottom: 25px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: var(--card-background); /* Use variable for card background */
+  box-shadow: 0 2px 8px var(--box-shadow-color); /* Use variable */
+  border-radius: 8px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.add-to-cart-form-card mat-form-field {
+  width: 100%;
+}
+
+/* Specific styling for Material input fields to ensure they respect theme */
+.add-to-cart-form-card .mat-form-field-appearance-fill .mat-form-field-flex,
+.add-to-cart-form-card .mat-form-field-appearance-outline .mat-form-field-flex {
+    background-color: var(--secondary-background); /* Background of the input area */
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart-form-card .mat-form-field-flex input {
+    color: var(--text-color); /* Text inside input fields */
+    transition: color 0.3s ease;
+}
+
+.add-to-cart-form-card button {
+  align-self: flex-end;
+  margin-top: 10px;
+  background-color: var(--primary-button-background); /* Use variable */
+  color: var(--primary-button-text);                 /* Use variable */
+  transition: background-color 0.3s ease, color 0.3s ease, filter 0.3s ease;
+}
+
+.add-to-cart-form-card button:hover {
+  filter: brightness(1.1);
+}
+
+.empty-cart-message {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.2em;
+  color: var(--text-color-light); /* Use variable */
+  transition: color 0.3s ease;
+}
+
+.empty-cart-message button {
+  margin-top: 20px;
+  background-color: var(--primary-button-background); /* Use variable */
+  color: var(--primary-button-text);                 /* Use variable */
+  transition: background-color 0.3s ease, color 0.3s ease, filter 0.3s ease;
+}
+.empty-cart-message button:hover {
+  filter: brightness(1.1);
+}
+
+.cart-table-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 8px; /* Apply border-radius to container */
+  overflow: hidden; /* Hide overflow from table corners */
+  border: 1px solid var(--border-color); /* Add a border to the container */
+  transition: border-color 0.3s ease;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--card-background); /* Use variable for table background */
+  transition: background-color 0.3s ease;
+}
+
+/* Table Header Styles */
+th.mat-header-cell {
+  background-color: var(--secondary-background); /* Use variable for table header background */
+  color: var(--text-color); /* Use variable for header text */
+  font-weight: bold;
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--border-color); /* Use variable */
+  text-align: left;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Table Row Styles */
+tr.mat-row {
+  border-bottom: 1px solid var(--border-color); /* Use variable */
+  transition: background-color 0.2s, border-color 0.3s ease;
+}
+
+tr.mat-row:last-child {
+  border-bottom: none;
+}
+
+tr.mat-row:nth-child(even) {
+  background-color: color-mix(in srgb, var(--card-background) 95%, var(--border-color) 5%); /* Slightly different shade for even rows */
+}
+
+tr.mat-row:hover {
+  background-color: var(--secondary-background); /* Use variable for hover background */
+}
+
+td.mat-cell {
+  padding: 12px 8px;
+  vertical-align: middle;
+  color: var(--text-color); /* Use variable for cell text */
+  transition: color 0.3s ease;
+}
+
+/* Styles for the image thumbnail */
+.cart-item-thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 4px;
+  vertical-align: middle;
+  border: 1px solid var(--border-color); /* Add a border to thumbnails */
+  transition: border-color 0.3s ease;
+}
+
+/* Column specific widths/alignments for better layout */
+.mat-column-image {
+  width: 120px;
+  padding-right: 8px;
+  text-align: center;
+}
+
+.mat-column-product {
+  min-width: 150px;
+}
+
+.mat-column-quantity {
+  width: 150px;
+  text-align: center;
+}
+
+.mat-column-price,
+.mat-column-total {
+  width: 120px;
+  text-align: right;
+  color: var(--primary-color); /* Highlight price/total */
+  transition: color 0.3s ease;
+}
+
+.mat-column-actions {
+  width: 100px;
+  text-align: center;
+}
+
+.cart-summary {
+  margin-top: 30px;
+  padding: 20px;
+  border: 1px solid var(--border-color); /* Use variable */
+  border-radius: 8px;
+  background-color: var(--card-background); /* Use variable */
+  box-shadow: 0 1px 5px var(--box-shadow-color); /* Use variable */
+  text-align: right;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cart-summary h3 {
+  color: var(--heading-color); /* Use variable */
+  margin-bottom: 15px;
+  transition: color 0.3s ease;
+}
+
+.cart-summary p {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  color: var(--text-color); /* Use variable */
+  transition: color 0.3s ease;
+}
+
+.cart-summary .grand-total {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: var(--accent-color, #e91e63); /* Use accent-color variable, fallback to pink */
+  margin-top: 15px;
+  margin-bottom: 20px;
+  transition: color 0.3s ease;
+}
+
+.cart-summary .checkout-button {
+  width: auto;
+  background-color: var(--primary-button-background); /* Use variable */
+  color: var(--primary-button-text);                 /* Use variable */
+  transition: background-color 0.3s ease, color 0.3s ease, filter 0.3s ease;
+}
+.cart-summary .checkout-button:hover {
+  filter: brightness(1.1);
+}
+
+/* STYLES FOR QUANTITY CONTROLS */
+.quantity-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0px;
+  border: 1px solid var(--border-color); /* Use variable */
+  border-radius: 4px;
+  overflow: hidden;
+  width: fit-content;
+  margin: 0 auto;
+  background-color: var(--secondary-background); /* Use variable */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.quantity-control button {
+  min-width: 32px;
+  height: 32px;
+  padding: 0;
+  line-height: 1;
+  border-radius: 0;
+  color: var(--primary-color); /* Use primary color for quantity control icons */
+  transition: background-color 0.2s ease, color 0.2s ease;
+  background-color: transparent;
+}
+
+.quantity-control button:hover:not([disabled]) {
+  background-color: var(--border-color); /* Use border color for hover background */
+}
+
+.quantity-control button:first-child {
+  border-right: 1px solid var(--border-color); /* Use variable */
+}
+
+.quantity-control button:last-child {
+  border-left: 1px solid var(--border-color); /* Use variable */
+}
+
+.quantity-control button[disabled] {
+  color: var(--text-color-light); /* Dim disabled buttons */
+  cursor: not-allowed;
+  background-color: var(--secondary-background); /* Slightly different background for disabled */
+}
+
+.quantity-input {
+  width: 40px;
+  height: 32px;
+  text-align: center;
+  padding: 0 4px;
+  border: none;
+  background-color: var(--card-background); /* Use variable */
+  font-size: 1em;
+  color: var(--text-color); /* Use variable */
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  appearance: none;
+}
+
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

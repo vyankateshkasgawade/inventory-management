@@ -1,0 +1,175 @@
+/* payment.component.css */
+.payment-card {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: var(--card-background); /* Use variable */
+  box-shadow: 0 4px 8px var(--box-shadow-color); /* Use variable */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+.payment-card mat-card-title {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: var(--heading-color); /* Use variable, not specific Material Indigo */
+  transition: color 0.3s ease;
+}
+
+.balance-section {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color); /* Use variable */
+  transition: border-color 0.3s ease;
+}
+
+.balance-section h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: var(--text-color); /* Use variable */
+  transition: color 0.3s ease;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.balance-input {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid var(--border-color); /* Use variable */
+  border-radius: 4px;
+  background-color: var(--secondary-background); /* Background for input */
+  color: var(--text-color); /* Text color in input */
+  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.balance-input:focus {
+  border-color: var(--primary-button-background);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-button-background) 25%, transparent);
+  outline: none;
+}
+
+.apply-button {
+  background-color: var(--secondary-button-background); /* Use variable */
+  color: var(--secondary-button-text); /* Use variable */
+  border: 1px solid var(--border-color); /* Use variable */
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, filter 0.3s ease;
+}
+
+.apply-button:hover {
+  filter: brightness(1.1);
+}
+
+.payment-option-group {
+  margin-bottom: 20px;
+  padding-top: 15px;
+}
+
+.payment-option-group h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: var(--text-color); /* Use variable */
+  transition: color 0.3s ease;
+}
+
+mat-radio-group {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-radio-button {
+  margin-bottom: 15px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border-color); /* Use variable */
+  transition: border-color 0.3s ease;
+  /* Adjust radio button color if needed, typically done via Angular Material theming */
+  /* For text inside radio button labels: */
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+mat-radio-button:last-child {
+  border-bottom: none;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.payment-logo, .card-logos img {
+  height: 20px;
+  width: auto;
+  margin-right: 5px;
+  /* Logos are images, their colors won't change directly, but their border might */
+  border: 1px solid transparent; /* Optional: add subtle border that changes */
+  transition: border-color 0.3s ease;
+}
+
+.card-logos {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.net-banking-select {
+  width: 200px;
+  margin-left: 10px;
+  background-color: var(--secondary-background); /* Background for select */
+  color: var(--text-color); /* Text color in select */
+  border: 1px solid var(--border-color); /* Border for select */
+  border-radius: 4px;
+  padding: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.info-text {
+  font-size: 0.85em;
+  color: var(--text-color-light); /* Use variable */
+  margin-left: auto;
+  transition: color 0.3s ease;
+}
+
+.info-text a {
+  color: var(--primary-button-background); /* Use primary button color for links */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.info-text a:hover {
+  text-decoration: underline;
+  filter: brightness(1.1); /* Subtle hover effect */
+}
+
+.payment-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color); /* Use variable */
+  transition: border-color 0.3s ease;
+}
+
+/* Consider adding styles for the checkout button itself if it's placed in payment-actions */
+/* Example: */
+.payment-actions button {
+    background-color: var(--primary-button-background);
+    color: var(--primary-button-text);
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, filter 0.3s ease;
+}
+
+.payment-actions button:hover {
+    filter: brightness(1.1);
+}

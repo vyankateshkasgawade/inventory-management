@@ -1,0 +1,203 @@
+/* src/app/register/register.component.css */
+
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Full viewport height */
+  /* Use gradient variables for background */
+  background: linear-gradient(135deg, var(--primary-background-light-gradient-start) 0%, var(--primary-background-light-gradient-end) 100%);
+  padding: 20px;
+  box-sizing: border-box; /* Include padding in element's total width and height */
+  font-family: 'Inter', sans-serif; /* Consistent font */
+  transition: background 0.5s ease; /* Smooth transition for background */
+}
+
+.register-container form {
+  background-color: var(--card-background); /* Form background */
+  padding: 40px;
+  border-radius: 12px; /* More rounded corners */
+  box-shadow: 0 10px 30px var(--box-shadow-color); /* Softer, larger shadow */
+  width: 100%;
+  max-width: 500px; /* Max width for larger screens */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Spacing between form groups */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.register-container h2 {
+  text-align: center;
+  color: var(--heading-color); /* Heading color */
+  margin-bottom: 30px;
+  font-size: 2em;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.register-container h3 {
+  color: var(--text-color-light); /* Subheading color */
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-size: 1.2em;
+  border-bottom: 1px solid var(--border-color); /* Border color */
+  padding-bottom: 5px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.register-container div {
+  margin-bottom: 15px; /* Space between form field groups */
+}
+
+.register-container label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-color-light); /* Label color */
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.register-container input[type="text"],
+.register-container input[type="email"],
+.register-container input[type="password"],
+.register-container input[type="date"] {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--border-color); /* Input border */
+  border-radius: 8px; /* Rounded input fields */
+  font-size: 1em;
+  box-sizing: border-box;
+  color: var(--text-color); /* Input text color */
+  background-color: var(--secondary-background); /* Input background */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease, background-color 0.3s ease;
+}
+
+.register-container input[type="text"]:focus,
+.register-container input[type="email"]:focus,
+.register-container input[type="password"]:focus,
+.register-container input[type="date"]:focus {
+  border-color: var(--primary-button-background); /* Highlight on focus */
+  box-shadow: 0 0 0 3px var(--focus-shadow-color); /* Focus shadow */
+  outline: none;
+}
+
+.register-container button {
+  padding: 12px 25px;
+  background-color: var(--primary-button-background); /* Button background */
+  color: var(--primary-button-text); /* Button text color */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.register-container button:hover:not(:disabled) {
+  /* Derive darker hover color from primary button background */
+  background-color: color-mix(in srgb, var(--primary-button-background) 85%, black);
+  transform: translateY(-2px);
+}
+
+.register-container button:disabled {
+  /* Derive disabled background color from primary button background */
+  background-color: color-mix(in srgb, var(--primary-button-background) 50%, var(--border-color));
+  /* Derive disabled text color from primary button text */
+  color: color-mix(in srgb, var(--primary-button-text) 50%, var(--text-color-light));
+  cursor: not-allowed;
+  transform: none;
+}
+
+.message-card {
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.success-message {
+  color: var(--success-text);
+  background-color: var(--success-background);
+  border: 1px solid var(--success-border);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.error-message {
+  color: var(--error-text);
+  background-color: var(--error-background);
+  border: 1px solid var(--error-border);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.otp-message {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.1em;
+  color: var(--text-color); /* OTP message color */
+  transition: color 0.3s ease;
+}
+
+.form-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: var(--text-color-light); /* Link group text color */
+  transition: color 0.3s ease;
+}
+
+.form-link a {
+  color: var(--link-color); /* Link color */
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.form-link a:hover {
+  text-decoration: underline;
+  color: var(--link-hover-color); /* Link hover color */
+}
+
+/* Spinner styles */
+.spinner {
+  /* Spinner colors based on the button's text color */
+  border: 3px solid color-mix(in srgb, var(--primary-button-text) 30%, transparent);
+  border-top: 3px solid var(--primary-button-text);
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+  display: inline-block; /* Ensure it's visible */
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .register-container form {
+    padding: 25px;
+    margin: 10px;
+  }
+
+  .register-container h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+  }
+
+  .register-container button {
+    font-size: 1em;
+    padding: 10px 20px;
+  }
+}
